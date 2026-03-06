@@ -1,23 +1,15 @@
-import express from 'express';
-import { config } from './config';
-import { apiRouter } from './routes/api';
-import { errorHandler } from './middleware/error-handler';
-import { authMiddleware } from './middleware/auth';
+// src/index.ts
+//
+// This is a placeholder source file. In a real project, your
+// actual application code would live here alongside the .claude/
+// configuration directory and other Claude Code files.
+//
+// Claude Code works with any language or framework. The .claude/
+// directory, CLAUDE.md, and .mcp.json sit at the project root
+// while your source code lives wherever it normally would.
 
-const app = express();
+export function main(): void {
+  console.log("Hello from your project.");
+}
 
-// Middleware
-app.use(express.json());
-app.use(authMiddleware);
-
-// Routes
-app.use('/api/v1', apiRouter);
-
-// Error handling (must be last)
-app.use(errorHandler);
-
-// Start server
-const port = config.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server running on :${port}`);
-});
+main();
