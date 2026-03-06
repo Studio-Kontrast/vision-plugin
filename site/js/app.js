@@ -53,8 +53,8 @@ class App {
     window.app = this;
   }
 
-  _onFileSelected(node) {
-    this.contentLoader.showFile(node);
+  async _onFileSelected(node) {
+    await this.contentLoader.showFile(node);
     if (node.feature) {
       this.progress.visit(node.feature);
     }

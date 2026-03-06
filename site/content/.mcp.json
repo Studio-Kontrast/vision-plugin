@@ -1,0 +1,38 @@
+{
+  // MCP (Model Context Protocol) lets Claude use external tools.
+  // Each server provides a set of tools Claude can call.
+  //
+  // This file configures which MCP servers are available.
+  // Commit this to your repo so your team shares the same tools.
+  // Use .mcp.local.json for personal servers (gitignored).
+
+  "mcpServers": {
+    // GitHub integration - lets Claude read issues, PRs, and repo data
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "your-github-token-here"
+      }
+    },
+
+    // PostgreSQL - lets Claude query your database directly
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "DATABASE_URL": "postgresql://localhost:5432/mydb"
+      }
+    },
+
+    // Filesystem - gives Claude access to files outside the project
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y", "@modelcontextprotocol/server-filesystem",
+        "/Users/you/Documents",
+        "/Users/you/Downloads"
+      ]
+    }
+  }
+}

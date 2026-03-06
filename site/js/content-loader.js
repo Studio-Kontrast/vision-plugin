@@ -71,9 +71,21 @@ class ContentLoader {
   }
 
   /** Show content for a file node */
-  showFile(node) {
+  async showFile(node) {
     const content = document.getElementById('content');
     if (!content) return;
+
+    // Load content from external file if needed
+    if (node.contentFile && !node.content) {
+      try {
+        const resp = await fetch('content/' + node.contentFile);
+        if (resp.ok) {
+          node.content = await resp.text();
+        }
+      } catch (e) {
+        // Silently fall through to no-content state
+      }
+    }
 
     // Update tab bar
     this._updateTab(node);
