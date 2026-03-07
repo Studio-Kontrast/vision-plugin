@@ -50,7 +50,13 @@
         <div class="traffic-light traffic-light--minimize"></div>
         <div class="traffic-light traffic-light--maximize"></div>
       </div>
+      <button class="mobile-sidebar-toggle" id="mobile-sidebar-toggle" aria-label="Toggle sidebar">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
       <span class="title-bar__text">claude-code-explorer : my-project</span>
+      <button class="mobile-terminal-toggle" id="mobile-terminal-toggle" aria-label="Toggle terminal">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
       <a class="title-bar__badge" href="https://github.com/LukeRenton/explore-claude-code" target="_blank" rel="noopener noreferrer">
         <img src="https://img.shields.io/github/stars/LukeRenton/explore-claude-code?style=flat&logo=github&label=GitHub&color=c47a50" alt="GitHub" height="18">
       </a>
@@ -94,6 +100,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Mobile sidebar backdrop (outside app-shell for iOS fixed positioning) -->
+  <div class="mobile-backdrop" id="mobile-backdrop"></div>
 
   <!-- The Void (minimize easter egg) -->
   <div class="void-overlay" id="void-overlay">

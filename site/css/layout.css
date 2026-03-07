@@ -287,13 +287,75 @@ html, body {
   background: var(--border-strong);
 }
 
+/* ── Mobile Toggle Buttons (hidden on desktop) ────────────── */
+
+.mobile-sidebar-toggle,
+.mobile-terminal-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: color 0.1s, background 0.1s;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-sidebar-toggle:hover,
+.mobile-terminal-toggle:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+/* Mobile backdrop overlay */
+.mobile-backdrop {
+  display: none;
+}
+
 /* ── Responsive ────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
+  html, body {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .app-shell {
     margin: 0;
     border-radius: 0;
     border: none;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* Show mobile toggle buttons */
+  .mobile-sidebar-toggle,
+  .mobile-terminal-toggle {
+    display: flex;
+  }
+
+  .mobile-sidebar-toggle {
+    margin-right: var(--space-xs);
+  }
+
+  .mobile-terminal-toggle {
+    margin-left: var(--space-xs);
+  }
+
+  /* Hide desktop traffic lights on mobile */
+  .traffic-lights {
+    display: none !important;
+  }
+
+  .title-bar {
+    height: 44px;
+    padding: 0 var(--space-sm);
   }
 
   .title-bar__text {
@@ -303,23 +365,119 @@ html, body {
     white-space: nowrap;
   }
 
-  .traffic-lights {
-    margin-right: var(--space-sm);
+  .title-bar__badge img {
+    height: 16px;
   }
 
+  /* Main layout — content fills the space */
   .main-layout {
-    flex-direction: column;
+    position: relative;
   }
 
+  /* ── Sidebar: JS sets display:none on load, display:flex when open ── */
   .sidebar {
-    width: 100%;
-    min-width: 100%;
-    max-height: 35vh;
     border-right: none;
-    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .sidebar.mobile-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    min-width: 280px;
+    max-height: none;
+    z-index: 1000;
+    border-right: 1px solid var(--border-subtle);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+    animation: sidebar-slide-in 0.25s ease forwards;
+  }
+
+  @keyframes sidebar-slide-in {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(0); }
+  }
+
+  /* Backdrop — JS manages display */
+  .mobile-backdrop.visible {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    -webkit-tap-highlight-color: transparent;
+    animation: fade-in 0.2s ease forwards;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── Content area takes full space ── */
+  .content-area {
+    flex: 1;
+    min-height: 0;
   }
 
   .content-scroll {
-    padding: var(--space-md);
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+  }
+
+  /* ── Tab bar: horizontal scroll, smaller tabs ── */
+  .tab {
+    padding: 0 var(--space-sm);
+    font-size: 11px;
+    max-width: 130px;
+  }
+
+  .tab__close {
+    display: none;
+  }
+
+  /* ── Terminal: JS sets display:none on load, display:flex when open ── */
+  .terminal-panel.mobile-open {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    min-width: 100%;
+    max-height: 55vh;
+    height: 50vh;
+    z-index: 1000;
+    border-left: none;
+    border-top: 1px solid var(--border-default);
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.5);
+    animation: terminal-slide-up 0.3s ease forwards;
+  }
+
+  @keyframes terminal-slide-up {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  /* Override collapsed state for mobile */
+  .terminal-panel.mobile-open.collapsed .terminal-header {
+    writing-mode: horizontal-tb;
+    text-orientation: initial;
+    height: 34px;
+    width: 100%;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .terminal-panel.mobile-open.collapsed .terminal-header__actions {
+    margin-left: auto;
+    margin-top: 0;
+    flex-direction: row;
+  }
+
+  .terminal-panel.mobile-open.collapsed .terminal-body {
+    display: flex;
+  }
+
+  .terminal-panel.mobile-open.collapsed .terminal-header__label {
+    letter-spacing: 0.08em;
   }
 }

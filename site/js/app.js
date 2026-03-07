@@ -43,6 +43,9 @@ class App {
     this.terminal = new Terminal();
     this.terminal.init();
 
+    // Mobile UI
+    this._setupMobile();
+
     // Event listeners
     this._setupEventListeners();
 
@@ -71,11 +74,26 @@ class App {
         e.preventDefault();
         this._navigate(1);
       }
-      // Escape exits void or fullscreen
+      // Escape exits void, fullscreen, or mobile panels
       if (e.key === 'Escape') {
         const overlay = document.getElementById('void-overlay');
         if (overlay && overlay.classList.contains('active')) {
           this._exitVoid();
+        } else if (this._isMobile()) {
+          const sidebar = document.querySelector('.sidebar');
+          const backdrop = document.getElementById('mobile-backdrop');
+          const terminal = document.getElementById('terminal-panel');
+          if (sidebar && sidebar.classList.contains('mobile-open')) {
+            sidebar.classList.remove('mobile-open');
+            sidebar.style.display = 'none';
+            if (backdrop) {
+              backdrop.classList.remove('visible');
+              backdrop.style.display = 'none';
+            }
+          } else if (terminal && terminal.classList.contains('mobile-open')) {
+            terminal.classList.remove('mobile-open');
+            terminal.style.display = 'none';
+          }
         } else {
           const shell = document.querySelector('.app-shell');
           if (shell && shell.classList.contains('fullscreen')) {
@@ -142,6 +160,101 @@ class App {
     if (escapeBtn) {
       escapeBtn.addEventListener('click', () => this._exitVoid());
     }
+  }
+
+  _isMobile() {
+    return window.matchMedia('(max-width: 768px)').matches;
+  }
+
+  _setupMobile() {
+    const sidebarToggle = document.getElementById('mobile-sidebar-toggle');
+    const terminalToggle = document.getElementById('mobile-terminal-toggle');
+    const backdrop = document.getElementById('mobile-backdrop');
+    const sidebar = document.querySelector('.sidebar');
+    const terminalPanel = document.getElementById('terminal-panel');
+
+    // Helpers that use inline styles for iOS Safari reliability
+    const showSidebar = () => {
+      sidebar.classList.add('mobile-open');
+      sidebar.style.display = 'flex';
+      backdrop.classList.add('visible');
+      backdrop.style.display = 'block';
+    };
+    const hideSidebar = () => {
+      sidebar.classList.remove('mobile-open');
+      sidebar.style.display = 'none';
+      backdrop.classList.remove('visible');
+      backdrop.style.display = 'none';
+    };
+    const showTerminal = () => {
+      terminalPanel.classList.add('mobile-open');
+      terminalPanel.style.display = 'flex';
+    };
+    const hideTerminal = () => {
+      terminalPanel.classList.remove('mobile-open');
+      terminalPanel.style.display = 'none';
+    };
+
+    // Hide sidebar and terminal on initial load (mobile)
+    if (this._isMobile()) {
+      sidebar.style.display = 'none';
+      terminalPanel.style.display = 'none';
+    }
+
+    // Sidebar toggle
+    if (sidebarToggle) {
+      sidebarToggle.addEventListener('click', () => {
+        if (sidebar.classList.contains('mobile-open')) {
+          hideSidebar();
+        } else {
+          hideTerminal();
+          showSidebar();
+        }
+      });
+    }
+
+    // Terminal toggle
+    if (terminalToggle) {
+      terminalToggle.addEventListener('click', () => {
+        if (terminalPanel.classList.contains('mobile-open')) {
+          hideTerminal();
+        } else {
+          hideSidebar();
+          showTerminal();
+          const input = document.getElementById('terminal-input');
+          if (input) setTimeout(() => input.focus(), 300);
+        }
+      });
+    }
+
+    // Backdrop closes sidebar
+    if (backdrop) {
+      backdrop.addEventListener('click', () => {
+        hideSidebar();
+      });
+    }
+
+    // Close sidebar on file selection (mobile only)
+    const origOnFileSelected = this._onFileSelected.bind(this);
+    this._onFileSelected = async (node) => {
+      await origOnFileSelected(node);
+      if (this._isMobile()) {
+        hideSidebar();
+      }
+    };
+
+    // Handle orientation change / resize across breakpoint
+    window.addEventListener('resize', () => {
+      if (!this._isMobile()) {
+        // Restore desktop: clear inline styles
+        sidebar.style.display = '';
+        terminalPanel.style.display = '';
+        sidebar.classList.remove('mobile-open');
+        terminalPanel.classList.remove('mobile-open');
+        backdrop.classList.remove('visible');
+        backdrop.style.display = '';
+      }
+    });
   }
 
   _enterVoid() {

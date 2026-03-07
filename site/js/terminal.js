@@ -53,18 +53,34 @@ class Terminal {
     const header = this.panel.querySelector('.terminal-header');
     const chevron = this.panel.querySelector('.terminal-header__chevron');
 
+    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
+    // On mobile, header/chevron taps close the terminal instead of collapsing
+    const handleToggle = () => {
+      if (isMobile()) {
+        this._closeMobile();
+      } else {
+        this._toggleCollapse();
+      }
+    };
+
     if (header) {
       header.addEventListener('click', (e) => {
         if (e.target.closest('.terminal-header__btn')) return;
-        this._toggleCollapse();
+        handleToggle();
       });
     }
     if (chevron) {
       chevron.addEventListener('click', (e) => {
         e.stopPropagation();
-        this._toggleCollapse();
+        handleToggle();
       });
     }
+  }
+
+  _closeMobile() {
+    this.panel.classList.remove('mobile-open');
+    this.panel.style.display = 'none';
   }
 
   _setupResize() {

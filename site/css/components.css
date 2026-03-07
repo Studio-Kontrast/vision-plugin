@@ -251,13 +251,88 @@
   vertical-align: middle;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .feature-cards {
     grid-template-columns: 1fr;
   }
 
+  .welcome {
+    max-width: 100%;
+  }
+
   .welcome__title {
-    font-size: 28px;
+    font-size: 26px;
+    margin-bottom: var(--space-md);
+  }
+
+  .welcome__subtitle {
+    font-size: 13px;
+    max-width: 100%;
+  }
+
+  .welcome__label {
+    font-size: 10px;
+  }
+
+  .feature-card {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .feature-card__title {
+    font-size: 12px;
+  }
+
+  .feature-card__desc {
+    font-size: 11px;
+  }
+
+  /* File view */
+  .file-view {
+    max-width: 100%;
+  }
+
+  .file-view__title {
+    font-size: 18px;
+  }
+
+  .file-view__desc {
+    font-size: 13px;
+  }
+
+  .file-view__command {
+    font-size: 11px;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  /* Code preview */
+  .code-preview__header {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .code-preview__rendered {
+    padding: var(--space-md);
+    font-size: 12px;
+  }
+
+  .code-preview__body pre {
+    font-size: 11px;
+    padding: var(--space-sm);
+  }
+
+  /* Rendered markdown tables scroll horizontally */
+  .code-preview__rendered .md-table {
+    display: block;
+    overflow-x: auto;
+    font-size: 11px;
+  }
+
+  /* Related files wrap */
+  .file-view__related-link {
+    font-size: 11px;
+    margin-right: var(--space-sm);
+    margin-bottom: var(--space-xs);
   }
 }
 
