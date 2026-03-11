@@ -7,10 +7,13 @@ Claude Code plugin for Hello Pomelo product projects. It packages a PR review pi
 | Area | Purpose |
 |---|---|
 | `.claude-plugin/plugin.json` | Names the plugin, versions it, and defines distribution metadata |
+| `commands/` | Markdown slash-command workflows bundled with the plugin |
 | `agents/` | Review specialists plus an architecture helper |
 | `skills/` | Reusable knowledge for frontend, backend, API, security, testing, deployment, database, and git workflow |
 | `hooks/` + `scripts/branch-guard.sh` | Guardrails for git pushes and Claude write actions |
 | `.mcp.json` | Bundled external context sources, starting with Zeplin |
+| `.lsp.json` | Bundled language server definitions |
+| `settings.json` | Default plugin settings applied when enabled |
 
 ## Why this shape?
 

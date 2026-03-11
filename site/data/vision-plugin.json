@@ -5,15 +5,16 @@
   "sidebarMeta": "plugin package",
   "expandedDirs": [
     ".claude-plugin",
-    "agents",
     "skills",
+    "commands",
+    "agents",
     "hooks",
     "scripts"
   ],
   "welcome": {
     "label": "// vision-plugin",
     "title": "Explore the <em>plugin package</em><br>that powers the project view.",
-    "subtitle": "This view shows the reusable Claude Code plugin itself: manifest, README, agents, skills, hooks, bundled MCP, and scripts.",
+    "subtitle": "This view shows the reusable Claude Code plugin itself: manifest, skills, commands, agents, hooks, bundled MCP, LSP, default settings, and scripts.",
     "secondary": "Switch back to <code>my-project</code> to see how a consuming repository enables this package without storing all plugin files in the app repo."
   },
   "badges": {
@@ -40,6 +41,10 @@
     "config": {
       "label": "config",
       "color": "#7a7670"
+    },
+    "commands": {
+      "label": "commands",
+      "color": "#8e82ad"
     }
   },
   "features": {
@@ -48,25 +53,35 @@
       "description": "The manifest, README, changelog, and license that define the package.",
       "order": 1
     },
-    "agents": {
-      "title": "Agents",
-      "description": "Reusable subagents shipped by the plugin.",
-      "order": 2
-    },
     "skills": {
       "title": "Skills",
       "description": "Reusable knowledge packs shipped with the plugin.",
+      "order": 2
+    },
+    "commands": {
+      "title": "Commands",
+      "description": "Markdown slash-command workflows bundled with the plugin.",
       "order": 3
+    },
+    "agents": {
+      "title": "Agents",
+      "description": "Reusable subagents shipped by the plugin.",
+      "order": 4
     },
     "hooks": {
       "title": "Hooks",
       "description": "Hook configuration and scripts bundled by the plugin.",
-      "order": 4
+      "order": 5
     },
     "mcp": {
       "title": "Bundled MCP",
       "description": "MCP servers that start automatically when the plugin is enabled.",
-      "order": 5
+      "order": 6
+    },
+    "config": {
+      "title": "Plugin Defaults",
+      "description": "Bundled LSP and default plugin settings.",
+      "order": 7
     }
   },
   "tree": [
@@ -85,84 +100,6 @@
           "label": "Plugin Manifest",
           "description": "The manifest that defines the plugin identity, metadata, and discovery.",
           "contentFile": "vision-plugin/.claude-plugin/plugin.json"
-        }
-      ]
-    },
-    {
-      "name": "README.md",
-      "path": "README.md",
-      "type": "file",
-      "feature": "plugins",
-      "badge": "plugins",
-      "label": "Plugin README",
-      "description": "The main overview of what the plugin ships and how teams adopt it.",
-      "contentFile": "vision-plugin/README.md"
-    },
-    {
-      "name": "agents",
-      "path": "agents",
-      "type": "directory",
-      "badge": "agents",
-      "children": [
-        {
-          "name": "pr-orchestrator.md",
-          "path": "agents/pr-orchestrator.md",
-          "type": "file",
-          "feature": "agents",
-          "badge": "agents",
-          "label": "PR Orchestrator",
-          "description": "Lead reviewer that classifies a diff and delegates to specialist agents.",
-          "contentFile": "vision-plugin/agents/pr-orchestrator.md"
-        },
-        {
-          "name": "code-reviewer.md",
-          "path": "agents/code-reviewer.md",
-          "type": "file",
-          "feature": "agents",
-          "badge": "agents",
-          "label": "Code Reviewer",
-          "description": "Checks bugs, architecture fit, conventions, and risky implementation details.",
-          "contentFile": "vision-plugin/agents/code-reviewer.md"
-        },
-        {
-          "name": "security-reviewer.md",
-          "path": "agents/security-reviewer.md",
-          "type": "file",
-          "feature": "agents",
-          "badge": "agents",
-          "label": "Security Reviewer",
-          "description": "Focuses on RBAC, secrets, uploads, webhooks, and API route hardening.",
-          "contentFile": "vision-plugin/agents/security-reviewer.md"
-        },
-        {
-          "name": "performance-reviewer.md",
-          "path": "agents/performance-reviewer.md",
-          "type": "file",
-          "feature": "agents",
-          "badge": "agents",
-          "label": "Performance Reviewer",
-          "description": "Looks for bundle regressions, data-loading waste, and expensive rendering patterns.",
-          "contentFile": "vision-plugin/agents/performance-reviewer.md"
-        },
-        {
-          "name": "test-coverage.md",
-          "path": "agents/test-coverage.md",
-          "type": "file",
-          "feature": "agents",
-          "badge": "agents",
-          "label": "Test Coverage Reviewer",
-          "description": "Flags missing unit, integration, and E2E coverage in changed areas.",
-          "contentFile": "vision-plugin/agents/test-coverage.md"
-        },
-        {
-          "name": "architect.md",
-          "path": "agents/architect.md",
-          "type": "file",
-          "feature": "agents",
-          "badge": "agents",
-          "label": "Architect",
-          "description": "Helps design PIM, DAM, ERP, and e-commerce application architecture with explicit trade-offs.",
-          "contentFile": "vision-plugin/agents/architect.md"
         }
       ]
     },
@@ -311,6 +248,102 @@
       ]
     },
     {
+      "name": "commands",
+      "path": "commands",
+      "type": "directory",
+      "badge": "commands",
+      "children": [
+        {
+          "name": "review-pr.md",
+          "path": "commands/review-pr.md",
+          "type": "file",
+          "feature": "commands",
+          "badge": "commands",
+          "label": "Review PR Command",
+          "description": "A Markdown slash-command workflow for reviewing pull requests.",
+          "contentFile": "vision-plugin/commands/review-pr.md"
+        },
+        {
+          "name": "write-tests.md",
+          "path": "commands/write-tests.md",
+          "type": "file",
+          "feature": "commands",
+          "badge": "commands",
+          "label": "Write Tests Command",
+          "description": "A Markdown slash-command workflow focused on adding tests.",
+          "contentFile": "vision-plugin/commands/write-tests.md"
+        }
+      ]
+    },
+    {
+      "name": "agents",
+      "path": "agents",
+      "type": "directory",
+      "badge": "agents",
+      "children": [
+        {
+          "name": "pr-orchestrator.md",
+          "path": "agents/pr-orchestrator.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "PR Orchestrator",
+          "description": "Lead reviewer that classifies a diff and delegates to specialist agents.",
+          "contentFile": "vision-plugin/agents/pr-orchestrator.md"
+        },
+        {
+          "name": "code-reviewer.md",
+          "path": "agents/code-reviewer.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Code Reviewer",
+          "description": "Checks bugs, architecture fit, conventions, and risky implementation details.",
+          "contentFile": "vision-plugin/agents/code-reviewer.md"
+        },
+        {
+          "name": "security-reviewer.md",
+          "path": "agents/security-reviewer.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Security Reviewer",
+          "description": "Focuses on RBAC, secrets, uploads, webhooks, and API route hardening.",
+          "contentFile": "vision-plugin/agents/security-reviewer.md"
+        },
+        {
+          "name": "performance-reviewer.md",
+          "path": "agents/performance-reviewer.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Performance Reviewer",
+          "description": "Looks for bundle regressions, data-loading waste, and expensive rendering patterns.",
+          "contentFile": "vision-plugin/agents/performance-reviewer.md"
+        },
+        {
+          "name": "test-coverage.md",
+          "path": "agents/test-coverage.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Test Coverage Reviewer",
+          "description": "Flags missing unit, integration, and E2E coverage in changed areas.",
+          "contentFile": "vision-plugin/agents/test-coverage.md"
+        },
+        {
+          "name": "architect.md",
+          "path": "agents/architect.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Architect",
+          "description": "Helps design PIM, DAM, ERP, and e-commerce application architecture with explicit trade-offs.",
+          "contentFile": "vision-plugin/agents/architect.md"
+        }
+      ]
+    },
+    {
       "name": "hooks",
       "path": "hooks",
       "type": "directory",
@@ -337,6 +370,36 @@
       "label": "Bundled MCP Configuration",
       "description": "Plugin-scoped MCP servers that start automatically when the plugin is enabled.",
       "contentFile": "vision-plugin/.mcp.json"
+    },
+    {
+      "name": ".lsp.json",
+      "path": ".lsp.json",
+      "type": "file",
+      "feature": "config",
+      "badge": "config",
+      "label": "Bundled LSP Configuration",
+      "description": "Language server definitions packaged with the plugin.",
+      "contentFile": "vision-plugin/.lsp.json"
+    },
+    {
+      "name": "settings.json",
+      "path": "settings.json",
+      "type": "file",
+      "feature": "config",
+      "badge": "config",
+      "label": "Default Plugin Settings",
+      "description": "Default plugin settings applied when vision-plugin is enabled.",
+      "contentFile": "vision-plugin/settings.json"
+    },
+    {
+      "name": "README.md",
+      "path": "README.md",
+      "type": "file",
+      "feature": "plugins",
+      "badge": "plugins",
+      "label": "Plugin README",
+      "description": "The main overview of what the plugin ships and how teams adopt it.",
+      "contentFile": "vision-plugin/README.md"
     },
     {
       "name": "scripts",
@@ -384,7 +447,7 @@
     "configPath": ".claude-plugin/plugin.json",
     "account": "plugin-maintainer@example.com",
     "plan": "Max (5x usage)",
-    "welcomeTagline": "Inspect the reusable package from its manifest down to agents, skills, hooks, and bundled MCP.",
+    "welcomeTagline": "Inspect the reusable package from its manifest down to skills, commands, agents, hooks, MCP, LSP, and default settings.",
     "quickStart": [
       {
         "command": "/config",
@@ -405,9 +468,9 @@
     ],
     "howToExplore": [
       "Read .claude-plugin/plugin.json for the package metadata and discovery model",
-      "Open README.md to understand the plugin intent and rollout strategy",
-      "Inspect agents, skills, hooks, and .mcp.json to see what gets bundled together",
-      "Switch to my-project to see how a consuming repo enables the package"
+      "Open skills/, commands/, and agents/ to inspect the reusable workflows shipped with the plugin",
+      "Inspect hooks/, .mcp.json, .lsp.json, and settings.json to see the bundled runtime defaults",
+      "Switch to my-project to see how a normal workspace consumes the package"
     ],
     "doctorChecks": [
       {
@@ -417,14 +480,20 @@
         "delay": 320
       },
       {
-        "label": "Review agents",
-        "detail": "6 agent files discovered inside the package",
+        "label": "Skills",
+        "detail": "8 skills available from the package",
         "pass": true,
         "delay": 280
       },
       {
-        "label": "Skills",
-        "detail": "8 skills available from the package",
+        "label": "Commands",
+        "detail": "Markdown slash-command workflows bundled in commands/",
+        "pass": true,
+        "delay": 260
+      },
+      {
+        "label": "Agents",
+        "detail": "6 agent files discovered inside the package",
         "pass": true,
         "delay": 280
       },
@@ -435,28 +504,28 @@
         "delay": 300
       },
       {
-        "label": "Bundled MCP",
-        "detail": "Zeplin configuration found at .mcp.json",
+        "label": "Bundled context",
+        "detail": "MCP, LSP, and default settings found at plugin root",
         "pass": true,
         "delay": 260
       }
     ],
-    "initFound": ".claude-plugin/plugin.json, agents/, skills/, hooks/, .mcp.json",
+    "initFound": ".claude-plugin/plugin.json, skills/, commands/, agents/, hooks/, .mcp.json, .lsp.json, settings.json",
     "initTechStack": [
       "Claude Code plugin package",
-      "Bundled MCP and review workflow",
+      "Bundled MCP and LSP configuration",
       "Shared automation for product teams"
     ],
     "initConventions": [
       "Plugin metadata lives in .claude-plugin/plugin.json",
-      "Reusable Claude automation is grouped into agents, skills, hooks, and MCP",
-      "Consuming repos enable the plugin from their own .claude/settings.json"
+      "Reusable Claude automation is grouped into skills, commands, agents, hooks, MCP, and LSP",
+      "Consuming repos enable the plugin from their own settings without duplicating the whole package"
     ],
     "memoryEntries": [
       "vision-plugin is a reusable package, not an application repo",
       "Zeplin is bundled in the plugin through .mcp.json",
-      "Agents and skills are shared across consumer projects",
-      "my-project shows the consumer side while this view shows the package itself"
+      "Commands, skills, and agents are shared across consumer projects",
+      "settings.json and .lsp.json live at the plugin root as bundled defaults"
     ]
   }
 }

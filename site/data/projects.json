@@ -5,7 +5,7 @@
       "id": "my-project",
       "label": "my-project",
       "sidebarLabel": "My-Project",
-      "sidebarMeta": "consumer project",
+      "sidebarMeta": "project workspace",
       "manifest": "data/my-project.json"
     },
     {

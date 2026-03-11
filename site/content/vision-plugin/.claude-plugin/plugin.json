@@ -3,7 +3,8 @@
   //
   // The plugin manifest defines identity, versioning, and discovery
   // metadata. This is the only file that lives inside .claude-plugin/.
-  // Skills, agents, hooks, and scripts stay at the plugin root.
+  // Skills, commands, agents, hooks, MCP, LSP, and scripts stay at
+  // the plugin root.
 
   "name": "vision-plugin",
   "description": "Claude Code plugin for review pipelines and architecture patterns used on Hello Pomelo product projects.",
@@ -26,11 +27,13 @@
   ]
 
   // Claude discovers components automatically:
-  //   agents/  -> custom reviewers and helpers
-  //   skills/  -> domain knowledge packs
-  //   hooks/   -> hook config
-  //
+  //   commands/ -> Markdown slash-command workflows
+  //   agents/   -> custom reviewers and helpers
+  //   skills/   -> domain knowledge packs
+  //   hooks/    -> hook config
   //   .mcp.json -> bundled MCP servers
+  //   .lsp.json -> bundled LSP servers
+  //   settings.json -> default plugin settings
   //
   // Skill names become namespaced slash commands:
   //   /vision-plugin:frontend-patterns

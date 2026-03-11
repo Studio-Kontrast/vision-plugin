@@ -15,9 +15,9 @@
 
 ---
 
-A simulated Claude Code setup you can click through. The site now has two complementary views: a consumer repo called `my-project`, and a reusable package called `vision-plugin`.
+A simulated Claude Code setup you can click through. The site now has two complementary views: the original generic workspace `my-project`, and a reusable package called `vision-plugin`.
 
-Every file and folder in the sidebar is a real Claude Code concept in context: project memory, project settings, plugin files, and the boundary between a consuming repo and a shared Claude Code package.
+Every file and folder in the sidebar is a real Claude Code concept in context: the original Claude Code workspace concepts on one side, and a reusable plugin package on the other.
 
 <p align="center">
   <img src="current.png" alt="Screenshot" width="820">
@@ -27,9 +27,9 @@ Every file and folder in the sidebar is a real Claude Code concept in context: p
 
 | Folder / File | Feature |
 |---|---|
-| `my-project/.claude/settings.json` | How a consumer repo enables `vision-plugin` |
-| `my-project/CLAUDE.md` | Project-specific memory that stays in the app repo |
-| `my-project/src/` | Normal application code that remains outside the plugin |
+| `my-project/.claude/` | The original generic Claude Code project structure from upstream |
+| `my-project/CLAUDE.md` | Project memory in the original workspace view |
+| `my-project/.mcp.json` and `src/` | Project-level MCP and normal source code in the original workspace view |
 | `vision-plugin/.claude-plugin/plugin.json` | The reusable plugin manifest |
 | `vision-plugin/agents/`, `skills/`, `hooks/`, `.mcp.json` | Shared Claude automation bundled by the plugin |
 

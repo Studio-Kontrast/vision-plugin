@@ -1,0 +1,13 @@
+{
+  // Plugin-scoped LSP configuration bundled with vision-plugin.
+  // Language servers declared here become part of the shared
+  // development environment when the plugin is enabled.
+
+  "servers": {
+    "typescript-language-server": {
+      "command": "npx",
+      "args": ["-y", "typescript-language-server", "--stdio"],
+      "languages": ["typescript", "tsx", "javascript", "jsx"]
+    }
+  }
+}
