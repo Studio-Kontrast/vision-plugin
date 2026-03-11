@@ -252,7 +252,7 @@
   display: none;
 }
 
-.app-shell.fullscreen .title-bar__text::after {
+.app-shell.fullscreen .title-bar__app-name::after {
   content: ' [fullscreen]';
   color: var(--accent, #c47a50);
 }

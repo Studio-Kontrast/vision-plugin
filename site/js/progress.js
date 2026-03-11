@@ -4,8 +4,8 @@
  */
 
 class ProgressTracker {
-  constructor(totalFeatures) {
-    this.storageKey = 'tcc-progress';
+  constructor(totalFeatures, storageKey = 'tcc-progress') {
+    this.storageKey = storageKey;
     this.totalFeatures = totalFeatures;
     this.visited = new Set(this._load());
   }

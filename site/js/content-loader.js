@@ -13,6 +13,7 @@ class ContentLoader {
     if (!content) return;
 
     const features = this.manifest.features;
+    const welcome = this.manifest.welcome || {};
     const featureIds = Object.keys(features).sort((a, b) => features[a].order - features[b].order);
 
     let cardsHtml = '';
@@ -29,17 +30,13 @@ class ContentLoader {
 
     content.innerHTML = `
       <div class="welcome">
-        <div class="welcome__label">// explore-claude-code</div>
-        <h1 class="welcome__title">Learn <em>Claude Code</em><br>by exploring it.</h1>
+        <div class="welcome__label">${welcome.label || '// explore-claude-code'}</div>
+        <h1 class="welcome__title">${welcome.title || 'Learn <em>Claude Code</em><br>by exploring it.'}</h1>
         <p class="welcome__subtitle">
-          This is a simulated Claude Code project. Every file and folder in the
-          sidebar is a real Claude Code concept &mdash; the same <code>.claude/</code>
-          directory, config files, and scaffolding you'd find in an actual repo.
-          Click any file to learn what it does, how to set it up, and see
-          annotated examples you can copy into your own projects.
+          ${welcome.subtitle || 'This is a simulated Claude Code project. Every file and folder in the sidebar is a real Claude Code concept &mdash; the same <code>.claude/</code> directory, config files, and scaffolding you\'d find in an actual repo. Click any file to learn what it does, how to set it up, and see annotated examples you can copy into your own projects.'}
         </p>
         <p class="welcome__subtitle welcome__subtitle--secondary">
-          Open a file. Read the source. Learn. Build.
+          ${welcome.secondary || 'Open a file. Read the source. Learn. Build.'}
         </p>
         <div class="feature-cards">${cardsHtml}</div>
       </div>`;
