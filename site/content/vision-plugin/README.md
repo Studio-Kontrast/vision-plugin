@@ -7,7 +7,6 @@ Claude Code plugin for Hello Pomelo product projects. It packages a PR review pi
 | Area | Purpose |
 |---|---|
 | `.claude-plugin/plugin.json` | Names the plugin, versions it, and defines distribution metadata |
-| `commands/` | Markdown slash-command workflows bundled with the plugin |
 | `agents/` | Review specialists plus an architecture helper |
 | `skills/` | Reusable knowledge for frontend, backend, API, security, testing, deployment, database, and git workflow |
 | `hooks/` + `scripts/branch-guard.sh` | Guardrails for git pushes and Claude write actions |
@@ -19,6 +18,7 @@ Claude Code plugin for Hello Pomelo product projects. It packages a PR review pi
 
 - Start from a shareable plugin, not repo-local `.claude/` files
 - Keep review agents lean and push deep domain knowledge into skills
+- Do not add `commands/`; slash commands are deprecated and replaced by skills
 - Focus on Next.js backoffice apps: PIM, DAM, ERP, and B2B commerce
 - Assume protected `staging` and `production` branches in every rollout
 - Bundle shared MCP config directly with the plugin so consumer repos stay lean

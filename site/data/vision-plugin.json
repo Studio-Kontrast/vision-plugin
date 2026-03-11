@@ -6,7 +6,6 @@
   "expandedDirs": [
     ".claude-plugin",
     "skills",
-    "commands",
     "agents",
     "hooks",
     "scripts"
@@ -14,7 +13,7 @@
   "welcome": {
     "label": "// vision-plugin",
     "title": "Explore the <em>plugin package</em><br>that powers the project view.",
-    "subtitle": "This view shows the reusable Claude Code plugin itself: manifest, skills, commands, agents, hooks, bundled MCP, LSP, default settings, and scripts.",
+    "subtitle": "This view shows the reusable Claude Code plugin itself: manifest, skills, agents, hooks, bundled MCP, LSP, default settings, and scripts.",
     "secondary": "Switch back to <code>my-project</code> to see how a consuming repository enables this package without storing all plugin files in the app repo."
   },
   "badges": {
@@ -41,10 +40,6 @@
     "config": {
       "label": "config",
       "color": "#7a7670"
-    },
-    "commands": {
-      "label": "commands",
-      "color": "#8e82ad"
     }
   },
   "features": {
@@ -58,30 +53,25 @@
       "description": "Reusable knowledge packs shipped with the plugin.",
       "order": 2
     },
-    "commands": {
-      "title": "Commands",
-      "description": "Markdown slash-command workflows bundled with the plugin.",
-      "order": 3
-    },
     "agents": {
       "title": "Agents",
       "description": "Reusable subagents shipped by the plugin.",
-      "order": 4
+      "order": 3
     },
     "hooks": {
       "title": "Hooks",
       "description": "Hook configuration and scripts bundled by the plugin.",
-      "order": 5
+      "order": 4
     },
     "mcp": {
       "title": "Bundled MCP",
       "description": "MCP servers that start automatically when the plugin is enabled.",
-      "order": 6
+      "order": 5
     },
     "config": {
       "title": "Plugin Defaults",
       "description": "Bundled LSP and default plugin settings.",
-      "order": 7
+      "order": 6
     }
   },
   "tree": [
@@ -244,34 +234,6 @@
               "contentFile": "vision-plugin/skills/git-workflow/SKILL.md"
             }
           ]
-        }
-      ]
-    },
-    {
-      "name": "commands",
-      "path": "commands",
-      "type": "directory",
-      "badge": "commands",
-      "children": [
-        {
-          "name": "review-pr.md",
-          "path": "commands/review-pr.md",
-          "type": "file",
-          "feature": "commands",
-          "badge": "commands",
-          "label": "Review PR Command",
-          "description": "A Markdown slash-command workflow for reviewing pull requests.",
-          "contentFile": "vision-plugin/commands/review-pr.md"
-        },
-        {
-          "name": "write-tests.md",
-          "path": "commands/write-tests.md",
-          "type": "file",
-          "feature": "commands",
-          "badge": "commands",
-          "label": "Write Tests Command",
-          "description": "A Markdown slash-command workflow focused on adding tests.",
-          "contentFile": "vision-plugin/commands/write-tests.md"
         }
       ]
     },
@@ -447,7 +409,7 @@
     "configPath": ".claude-plugin/plugin.json",
     "account": "plugin-maintainer@example.com",
     "plan": "Max (5x usage)",
-    "welcomeTagline": "Inspect the reusable package from its manifest down to skills, commands, agents, hooks, MCP, LSP, and default settings.",
+    "welcomeTagline": "Inspect the reusable package from its manifest down to skills, agents, hooks, MCP, LSP, and default settings.",
     "quickStart": [
       {
         "command": "/config",
@@ -468,7 +430,7 @@
     ],
     "howToExplore": [
       "Read .claude-plugin/plugin.json for the package metadata and discovery model",
-      "Open skills/, commands/, and agents/ to inspect the reusable workflows shipped with the plugin",
+      "Open skills/ and agents/ to inspect the reusable workflows shipped with the plugin",
       "Inspect hooks/, .mcp.json, .lsp.json, and settings.json to see the bundled runtime defaults",
       "Switch to my-project to see how a normal workspace consumes the package"
     ],
@@ -484,12 +446,6 @@
         "detail": "8 skills available from the package",
         "pass": true,
         "delay": 280
-      },
-      {
-        "label": "Commands",
-        "detail": "Markdown slash-command workflows bundled in commands/",
-        "pass": true,
-        "delay": 260
       },
       {
         "label": "Agents",
@@ -510,7 +466,7 @@
         "delay": 260
       }
     ],
-    "initFound": ".claude-plugin/plugin.json, skills/, commands/, agents/, hooks/, .mcp.json, .lsp.json, settings.json",
+    "initFound": ".claude-plugin/plugin.json, skills/, agents/, hooks/, .mcp.json, .lsp.json, settings.json",
     "initTechStack": [
       "Claude Code plugin package",
       "Bundled MCP and LSP configuration",
@@ -518,13 +474,13 @@
     ],
     "initConventions": [
       "Plugin metadata lives in .claude-plugin/plugin.json",
-      "Reusable Claude automation is grouped into skills, commands, agents, hooks, MCP, and LSP",
+      "Reusable Claude automation is grouped into skills, agents, hooks, MCP, and LSP",
       "Consuming repos enable the plugin from their own settings without duplicating the whole package"
     ],
     "memoryEntries": [
       "vision-plugin is a reusable package, not an application repo",
       "Zeplin is bundled in the plugin through .mcp.json",
-      "Commands, skills, and agents are shared across consumer projects",
+      "Skills and agents are shared across consumer projects",
       "settings.json and .lsp.json live at the plugin root as bundled defaults"
     ]
   }
