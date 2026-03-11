@@ -5,6 +5,7 @@ This workspace keeps the plugin under `.claude/plugins/vision-plugin/` so the te
 ## Why it lives here
 
 - `CLAUDE.md` and `.claude/settings.json` stay project-specific
+- `.mcp.json` stays at the project root because MCP servers are configured per workspace
 - The plugin keeps reusable automation isolated in one directory
 - `src/` remains application code and does not mix with Claude tooling
 
@@ -12,8 +13,8 @@ This workspace keeps the plugin under `.claude/plugins/vision-plugin/` so the te
 
 | Layer | Owned by | Examples |
 |---|---|---|
-| Project workspace | The application repo | `src/`, `CLAUDE.md`, `.claude/settings.json` |
-| Installed plugin | Shared Claude tooling | agents, skills, hooks, `.mcp.json` |
+| Project workspace | The application repo | `src/`, `CLAUDE.md`, `.mcp.json`, `.claude/settings.json` |
+| Installed plugin | Shared Claude tooling | agents, skills, hooks, scripts |
 
 ## Local development
 

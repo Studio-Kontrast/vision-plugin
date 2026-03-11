@@ -1,7 +1,8 @@
 {
-  // Project-scope MCP config bundled with the plugin.
-  // Zeplin is the default external context source because design
-  // engineers need direct access to tokens, screens, and specs.
+  // Project-scope MCP config for the consuming workspace.
+  // The plugin can recommend external context sources, but MCP servers
+  // are configured from the project root so each repository keeps
+  // control over its own tokens and integrations.
 
   "mcpServers": {
     "zeplin": {

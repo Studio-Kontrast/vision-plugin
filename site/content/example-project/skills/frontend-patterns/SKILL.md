@@ -1,6 +1,6 @@
 ---
 name: frontend-patterns
-description: Next.js frontend patterns for Studio Kontrast backoffice apps. Use for tables, multi-step forms, dashboards, and performance.
+description: Next.js frontend patterns for Hello Pomelo backoffice apps. Use for tables, multi-step forms, dashboards, and performance.
 ---
 
 # Frontend Patterns

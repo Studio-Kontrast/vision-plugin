@@ -1,6 +1,6 @@
 ---
 name: e2e-testing
-description: Playwright patterns for Studio Kontrast workflows: RBAC, imports, exports, and multi-step backoffice flows.
+description: Playwright patterns for Hello Pomelo workflows: RBAC, imports, exports, and multi-step backoffice flows.
 ---
 
 # E2E Testing

@@ -7,15 +7,13 @@
     ".claude",
     ".claude/plugins",
     ".claude/plugins/vision-plugin",
-    "src",
-    "src/app",
-    "src/modules"
+    "src"
   ],
   "welcome": {
     "label": "// example-project",
     "title": "Explore a <em>realistic workspace</em><br>with the plugin installed.",
-    "subtitle": "This repo now simulates a Next.js business application. The app code lives in <code>src/</code>, project rules live in <code>CLAUDE.md</code> and <code>.claude/settings.json</code>, and the reusable plugin is installed at <code>.claude/plugins/vision-plugin/</code>.",
-    "secondary": "Open the project files first, then inspect the installed plugin to see what ships with the workspace and what stays application-specific."
+    "subtitle": "This repo now simulates a small TypeScript application. The project code lives in <code>src/index.ts</code>, project rules live in <code>CLAUDE.md</code> and <code>.claude/settings.json</code>, and the reusable plugin is installed at <code>.claude/plugins/vision-plugin/</code>.",
+    "secondary": "Open the project root first, then inspect the installed plugin to see what stays project-specific and what can be shared across repositories."
   },
   "badges": {
     "memory": {
@@ -83,27 +81,17 @@
       "order": 6
     },
     "mcp": {
-      "title": "Plugin MCP",
-      "description": "External context like Zeplin that the plugin brings into the workspace.",
+      "title": "Project MCP",
+      "description": "External context configured at the project root alongside the installed plugin.",
       "order": 7
     },
     "code": {
       "title": "Workspace Architecture",
-      "description": "Package scripts, App Router files, services, and integrations that live next to the installed plugin.",
+      "description": "A minimal TypeScript entrypoint and package scripts that live next to the installed plugin.",
       "order": 8
     }
   },
   "tree": [
-    {
-      "name": "CLAUDE.md",
-      "path": "CLAUDE.md",
-      "type": "file",
-      "feature": "claude-md",
-      "badge": "memory",
-      "label": "Workspace CLAUDE.md",
-      "description": "Project memory for the simulated app, including where the plugin lives and how the codebase is split.",
-      "contentFile": "example-project/CLAUDE.md"
-    },
     {
       "name": ".claude",
       "path": ".claude",
@@ -399,16 +387,6 @@
                   ]
                 },
                 {
-                  "name": ".mcp.json",
-                  "path": ".claude/plugins/vision-plugin/.mcp.json",
-                  "type": "file",
-                  "feature": "mcp",
-                  "badge": "mcp",
-                  "label": "Plugin MCP Configuration",
-                  "description": "Zeplin and other external context exposed from the installed plugin directory.",
-                  "contentFile": "example-project/.mcp.json"
-                },
-                {
                   "name": "scripts",
                   "path": ".claude/plugins/vision-plugin/scripts",
                   "type": "directory",
@@ -433,14 +411,32 @@
       ]
     },
     {
-      "name": "package.json",
-      "path": "package.json",
-      "type": "file",
-      "feature": "code",
+      "name": "src",
+      "path": "src",
+      "type": "directory",
       "badge": "code",
-      "label": "Workspace Package",
-      "description": "The app scripts and dependencies that live alongside the installed plugin.",
-      "contentFile": "example-project/package.json"
+      "children": [
+        {
+          "name": "index.ts",
+          "path": "src/index.ts",
+          "type": "file",
+          "feature": "code",
+          "badge": "code",
+          "label": "Workspace Entry Point",
+          "description": "A minimal source file that shows where normal project code lives once the plugin is installed.",
+          "contentFile": "example-project/src/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "CLAUDE.md",
+      "path": "CLAUDE.md",
+      "type": "file",
+      "feature": "claude-md",
+      "badge": "memory",
+      "label": "Workspace CLAUDE.md",
+      "description": "Project memory for the simulated app, including where the plugin lives and which files stay project-specific.",
+      "contentFile": "example-project/CLAUDE.md"
     },
     {
       "name": "README.md",
@@ -453,115 +449,24 @@
       "contentFile": "example-project/workspace-README.md"
     },
     {
-      "name": "src",
-      "path": "src",
-      "type": "directory",
+      "name": ".mcp.json",
+      "path": ".mcp.json",
+      "type": "file",
+      "feature": "mcp",
+      "badge": "mcp",
+      "label": "Project MCP Configuration",
+      "description": "Project-level MCP servers that complement the installed plugin.",
+      "contentFile": "example-project/.mcp.json"
+    },
+    {
+      "name": "package.json",
+      "path": "package.json",
+      "type": "file",
+      "feature": "code",
       "badge": "code",
-      "children": [
-        {
-          "name": "app",
-          "path": "src/app",
-          "type": "directory",
-          "children": [
-            {
-              "name": "backoffice",
-              "path": "src/app/backoffice",
-              "type": "directory",
-              "children": [
-                {
-                  "name": "products",
-                  "path": "src/app/backoffice/products",
-                  "type": "directory",
-                  "children": [
-                    {
-                      "name": "page.tsx",
-                      "path": "src/app/backoffice/products/page.tsx",
-                      "type": "file",
-                      "feature": "code",
-                      "badge": "code",
-                      "label": "Backoffice Products Page",
-                      "description": "A representative App Router page that consumes the service layer inside the simulated workspace.",
-                      "contentFile": "example-project/src/app/backoffice/products/page.tsx"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "api",
-              "path": "src/app/api",
-              "type": "directory",
-              "children": [
-                {
-                  "name": "products",
-                  "path": "src/app/api/products",
-                  "type": "directory",
-                  "children": [
-                    {
-                      "name": "route.ts",
-                      "path": "src/app/api/products/route.ts",
-                      "type": "file",
-                      "feature": "code",
-                      "badge": "code",
-                      "label": "Products API Route",
-                      "description": "A thin route handler that delegates business logic to the workspace service layer.",
-                      "contentFile": "example-project/src/app/api/products/route.ts"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "modules",
-          "path": "src/modules",
-          "type": "directory",
-          "children": [
-            {
-              "name": "catalog",
-              "path": "src/modules/catalog",
-              "type": "directory",
-              "children": [
-                {
-                  "name": "product-service.ts",
-                  "path": "src/modules/catalog/product-service.ts",
-                  "type": "file",
-                  "feature": "code",
-                  "badge": "code",
-                  "label": "Catalog Service Layer",
-                  "description": "Business logic that powers both the UI and API within the simulated project.",
-                  "contentFile": "example-project/src/modules/catalog/product-service.ts"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "integrations",
-          "path": "src/integrations",
-          "type": "directory",
-          "children": [
-            {
-              "name": "sylius",
-              "path": "src/integrations/sylius",
-              "type": "directory",
-              "children": [
-                {
-                  "name": "sync-products.ts",
-                  "path": "src/integrations/sylius/sync-products.ts",
-                  "type": "file",
-                  "feature": "code",
-                  "badge": "code",
-                  "label": "Sylius Sync Integration",
-                  "description": "An integration boundary that shows where external platform logic sits relative to the plugin.",
-                  "contentFile": "example-project/src/integrations/sylius/sync-products.ts"
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      "label": "Workspace Package",
+      "description": "The package scripts and development dependencies that live alongside the installed plugin.",
+      "contentFile": "example-project/package.json"
     }
   ],
   "terminal": {
@@ -571,7 +476,7 @@
     "configPath": ".claude/settings.json",
     "account": "plugin-maintainer@example.com",
     "plan": "Max (5x usage)",
-    "welcomeTagline": "Trace the workspace from CLAUDE.md and src/ into the installed plugin at .claude/plugins/vision-plugin.",
+    "welcomeTagline": "Trace the workspace from .claude and src/ into the installed plugin at .claude/plugins/vision-plugin.",
     "quickStart": [
       {
         "command": "/config",
@@ -591,8 +496,9 @@
       }
     ],
     "howToExplore": [
+      "Open .claude/ to see the project-level Claude configuration and installed plugin",
+      "Open src/ to see the minimal application code that stays outside the plugin",
       "Read CLAUDE.md for the project-specific rules and directory map",
-      "Open src/ to see the application architecture the plugin is meant to support",
       "Dive into .claude/plugins/vision-plugin/ to inspect the installed plugin files"
     ],
     "doctorChecks": [
@@ -622,34 +528,34 @@
       },
       {
         "label": "Source tree",
-        "detail": "App Router, modules, and integrations are present in src/",
+        "detail": "Minimal TypeScript entrypoint found at src/index.ts",
         "pass": true,
         "delay": 300
       },
       {
         "label": "External context",
-        "detail": "Zeplin config ships with the installed plugin",
+        "detail": "Project-level MCP config found at .mcp.json",
         "pass": true,
         "delay": 260
       }
     ],
-    "initFound": "CLAUDE.md, .claude/plugins/vision-plugin, src/",
+    "initFound": "CLAUDE.md, .claude/plugins/vision-plugin, src/index.ts, .mcp.json",
     "initTechStack": [
-      "Next.js App Router workspace",
+      "Minimal TypeScript workspace",
       "Plugin-installed Claude Code workflow",
-      "PIM and Sylius integration services"
+      "Project-level MCP configuration"
     ],
     "initConventions": [
       "Application code stays in src/",
       "Reusable Claude automation lives under .claude/plugins/vision-plugin/",
-      "Project CLAUDE.md documents app-specific rules and architecture"
+      "Project CLAUDE.md and .mcp.json stay at the workspace root"
     ],
     "memoryEntries": [
       "The installed plugin lives under .claude/plugins/vision-plugin during local development",
-      "App Router pages should stay thin and use services from src/modules",
-      "Sylius integration code belongs in src/integrations, not in the plugin",
+      "Project code stays in src/, even when the workspace only has a single index.ts entrypoint",
       "Plugin hooks protect git workflow while project rules remain in CLAUDE.md",
-      "Zeplin context comes from the plugin MCP config"
+      ".mcp.json belongs at the workspace root because MCP servers are configured per project",
+      "The plugin can recommend external context sources without owning the project root config"
     ]
   }
 }

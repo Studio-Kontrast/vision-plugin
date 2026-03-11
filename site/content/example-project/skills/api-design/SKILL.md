@@ -1,6 +1,6 @@
 ---
 name: api-design
-description: REST conventions for naming, pagination, filtering, errors, and versioning in Studio Kontrast products.
+description: REST conventions for naming, pagination, filtering, errors, and versioning in Hello Pomelo products.
 ---
 
 # API Design

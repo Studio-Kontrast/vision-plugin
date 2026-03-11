@@ -15,7 +15,7 @@
 
 ---
 
-A simulated Claude Code workspace you can click through. The site now focuses on a single `example-project` repo that looks like a real Next.js codebase with an installed plugin under `.claude/plugins/vision-plugin/`.
+A simulated Claude Code workspace you can click through. The site now focuses on a single `example-project` repo that looks like a small TypeScript workspace with an installed plugin under `.claude/plugins/vision-plugin/`.
 
 Every file and folder in the sidebar is a real Claude Code concept in context: project memory, project settings, installed plugin files, and application source code living side by side in one simulated workspace.
 
@@ -33,7 +33,8 @@ Every file and folder in the sidebar is a real Claude Code concept in context: p
 | `.claude/plugins/vision-plugin/agents/` | Installed review subagents |
 | `.claude/plugins/vision-plugin/skills/` | Installed reusable skills |
 | `.claude/plugins/vision-plugin/hooks/` | Installed hook config and scripts |
-| `src/` | Example Next.js source code showing the app architecture next to the plugin |
+| `.mcp.json` | Project-level MCP config that complements the installed plugin |
+| `src/` | Minimal TypeScript source code showing where normal app code lives next to the plugin |
 
 Every piece of content in the explorer is written as if it were a real config file in a real repo. You're not reading *about* the config, you're reading *the config itself*, annotated so you understand every line. When you're done exploring, you can copy the scaffolding straight into your own projects.
 

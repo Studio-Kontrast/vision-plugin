@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Review code for bugs, architecture drift, data flow mistakes, and violations of Studio Kontrast conventions.
+description: Review code for bugs, architecture drift, data flow mistakes, and violations of Hello Pomelo conventions.
 model: sonnet
 tools:
   - Read

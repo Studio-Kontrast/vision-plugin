@@ -11,7 +11,7 @@ tools:
 
 # Mission
 
-Coordinate a multi-reviewer pass for Studio Kontrast product applications and plugin changes.
+Coordinate a multi-reviewer pass for Hello Pomelo product applications and plugin changes.
 
 ## Workflow
 

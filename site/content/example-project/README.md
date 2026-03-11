@@ -1,8 +1,8 @@
 # Vision Plugin
 
-Claude Code plugin for Studio Kontrast product projects. It packages a PR review pipeline, domain skills, hooks, and MCP configuration so the same setup can be enabled across multiple repos.
+Claude Code plugin for Hello Pomelo product projects. It packages a PR review pipeline, domain skills, hooks, and guardrails so the same setup can be enabled across multiple repos.
 
-## What is inside
+## What ships with it
 
 | Area | Purpose |
 |---|---|
@@ -10,7 +10,7 @@ Claude Code plugin for Studio Kontrast product projects. It packages a PR review
 | `agents/` | Review specialists plus an architecture helper |
 | `skills/` | Reusable knowledge for frontend, backend, API, security, testing, deployment, database, and git workflow |
 | `hooks/` + `scripts/branch-guard.sh` | Guardrails for git pushes and Claude write actions |
-| `.mcp.json` | External context sources starting with Zeplin |
+| Recommended project root `.mcp.json` | External context sources the plugin expects projects to enable, starting with Zeplin |
 
 ## Why this shape?
 
@@ -18,6 +18,7 @@ Claude Code plugin for Studio Kontrast product projects. It packages a PR review
 - Keep review agents lean and push deep domain knowledge into skills
 - Focus on Next.js backoffice apps: PIM, DAM, ERP, and B2B commerce
 - Assume protected `staging` and `production` branches in every rollout
+- Keep project-owned MCP config at the repository root
 
 ## PR review pipeline
 

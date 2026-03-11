@@ -6,11 +6,11 @@
   // Skills, agents, hooks, and scripts stay at the plugin root.
 
   "name": "vision-plugin",
-  "description": "Claude Code plugin for review pipelines and architecture patterns used on Studio Kontrast product projects.",
+  "description": "Claude Code plugin for review pipelines and architecture patterns used on Hello Pomelo product projects.",
   "version": "0.1.0",
 
   "author": {
-    "name": "Studio Kontrast",
+    "name": "Hello Pomelo",
     "url": "https://github.com/studio-kontrast"
   },
 
@@ -29,7 +29,9 @@
   //   agents/  -> custom reviewers and helpers
   //   skills/  -> domain knowledge packs
   //   hooks/   -> hook config
-  //   .mcp.json -> project-scoped MCP servers
+  //
+  // Project-scoped MCP servers stay in the consuming repo root:
+  //   .mcp.json -> workspace-owned external context
   //
   // Skill names become namespaced slash commands:
   //   /vision-plugin:frontend-patterns
