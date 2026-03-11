@@ -15,6 +15,10 @@
 
 ---
 
+> This repository is now a pedagogical reference only.
+> The real plugin package lives at https://github.com/liam-hellopomelo/vision-plugin
+> and should be treated as the source of truth for installation, testing, and rollout.
+
 A simulated Claude Code setup you can click through. The site now has two complementary views: the original generic workspace `my-project`, and a reusable package called `vision-plugin`.
 
 Every file and folder in the sidebar is a real Claude Code concept in context: the original Claude Code workspace concepts on one side, and a reusable plugin package on the other.
