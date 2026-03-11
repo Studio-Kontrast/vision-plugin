@@ -1,0 +1,25 @@
+{
+  // Project-scoped Claude settings for a repo that consumes vision-plugin.
+  // The plugin package is installed separately; this repo only records that
+  // the team enables it and relies on its shared agents, skills, hooks, and MCP.
+
+  "enabledPlugins": [
+    "vision-plugin"
+  ],
+
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Bash(git status)",
+      "Bash(npm run lint)",
+      "Bash(npm test)"
+    ]
+  },
+
+  "statusLine": {
+    "type": "command",
+    "command": "git branch --show-current"
+  }
+}

@@ -10,7 +10,7 @@ Claude Code plugin for Hello Pomelo product projects. It packages a PR review pi
 | `agents/` | Review specialists plus an architecture helper |
 | `skills/` | Reusable knowledge for frontend, backend, API, security, testing, deployment, database, and git workflow |
 | `hooks/` + `scripts/branch-guard.sh` | Guardrails for git pushes and Claude write actions |
-| Recommended project root `.mcp.json` | External context sources the plugin expects projects to enable, starting with Zeplin |
+| `.mcp.json` | Bundled external context sources, starting with Zeplin |
 
 ## Why this shape?
 
@@ -18,7 +18,7 @@ Claude Code plugin for Hello Pomelo product projects. It packages a PR review pi
 - Keep review agents lean and push deep domain knowledge into skills
 - Focus on Next.js backoffice apps: PIM, DAM, ERP, and B2B commerce
 - Assume protected `staging` and `production` branches in every rollout
-- Keep project-owned MCP config at the repository root
+- Bundle shared MCP config directly with the plugin so consumer repos stay lean
 
 ## PR review pipeline
 

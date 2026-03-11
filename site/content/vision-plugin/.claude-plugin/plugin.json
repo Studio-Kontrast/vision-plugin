@@ -30,8 +30,7 @@
   //   skills/  -> domain knowledge packs
   //   hooks/   -> hook config
   //
-  // Project-scoped MCP servers stay in the consuming repo root:
-  //   .mcp.json -> workspace-owned external context
+  //   .mcp.json -> bundled MCP servers
   //
   // Skill names become namespaced slash commands:
   //   /vision-plugin:frontend-patterns

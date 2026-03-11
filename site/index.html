@@ -54,7 +54,8 @@
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
       <div class="title-bar__center">
-        <span class="title-bar__app-name">claude-code-explorer : example-project</span>
+        <span class="title-bar__app-name" id="title-bar-app-name">claude-code-explorer : my-project</span>
+        <div class="project-switcher" id="project-switcher" aria-label="Project switcher"></div>
       </div>
       <button class="mobile-terminal-toggle" id="mobile-terminal-toggle" aria-label="Toggle terminal">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -72,8 +73,8 @@
       <!-- Sidebar -->
       <aside class="sidebar">
         <div class="sidebar__header">
-          <div class="sidebar__header-label" id="sidebar-project-label">Example-Project</div>
-          <div class="sidebar__header-meta" id="sidebar-project-meta">installed plugin workspace</div>
+          <div class="sidebar__header-label" id="sidebar-project-label">My-Project</div>
+          <div class="sidebar__header-meta" id="sidebar-project-meta">consumer project</div>
         </div>
         <div class="sidebar__tree" id="file-tree"></div>
       </aside>

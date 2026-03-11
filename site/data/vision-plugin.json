@@ -1,0 +1,462 @@
+{
+  "project": "vision-plugin",
+  "projectLabel": "vision-plugin",
+  "sidebarLabel": "Vision-Plugin",
+  "sidebarMeta": "plugin package",
+  "expandedDirs": [
+    ".claude-plugin",
+    "agents",
+    "skills",
+    "hooks",
+    "scripts"
+  ],
+  "welcome": {
+    "label": "// vision-plugin",
+    "title": "Explore the <em>plugin package</em><br>that powers the project view.",
+    "subtitle": "This view shows the reusable Claude Code plugin itself: manifest, README, agents, skills, hooks, bundled MCP, and scripts.",
+    "secondary": "Switch back to <code>my-project</code> to see how a consuming repository enables this package without storing all plugin files in the app repo."
+  },
+  "badges": {
+    "plugins": {
+      "label": "plugin",
+      "color": "#a89a48"
+    },
+    "agents": {
+      "label": "agents",
+      "color": "#b8965e"
+    },
+    "skill": {
+      "label": "skill",
+      "color": "#5e918a"
+    },
+    "hooks": {
+      "label": "hooks",
+      "color": "#ad6e5e"
+    },
+    "mcp": {
+      "label": "MCP",
+      "color": "#6e9468"
+    },
+    "config": {
+      "label": "config",
+      "color": "#7a7670"
+    }
+  },
+  "features": {
+    "plugins": {
+      "title": "Plugin Core",
+      "description": "The manifest, README, changelog, and license that define the package.",
+      "order": 1
+    },
+    "agents": {
+      "title": "Agents",
+      "description": "Reusable subagents shipped by the plugin.",
+      "order": 2
+    },
+    "skills": {
+      "title": "Skills",
+      "description": "Reusable knowledge packs shipped with the plugin.",
+      "order": 3
+    },
+    "hooks": {
+      "title": "Hooks",
+      "description": "Hook configuration and scripts bundled by the plugin.",
+      "order": 4
+    },
+    "mcp": {
+      "title": "Bundled MCP",
+      "description": "MCP servers that start automatically when the plugin is enabled.",
+      "order": 5
+    }
+  },
+  "tree": [
+    {
+      "name": ".claude-plugin",
+      "path": ".claude-plugin",
+      "type": "directory",
+      "badge": "config",
+      "children": [
+        {
+          "name": "plugin.json",
+          "path": ".claude-plugin/plugin.json",
+          "type": "file",
+          "feature": "plugins",
+          "badge": "plugins",
+          "label": "Plugin Manifest",
+          "description": "The manifest that defines the plugin identity, metadata, and discovery.",
+          "contentFile": "vision-plugin/.claude-plugin/plugin.json"
+        }
+      ]
+    },
+    {
+      "name": "README.md",
+      "path": "README.md",
+      "type": "file",
+      "feature": "plugins",
+      "badge": "plugins",
+      "label": "Plugin README",
+      "description": "The main overview of what the plugin ships and how teams adopt it.",
+      "contentFile": "vision-plugin/README.md"
+    },
+    {
+      "name": "agents",
+      "path": "agents",
+      "type": "directory",
+      "badge": "agents",
+      "children": [
+        {
+          "name": "pr-orchestrator.md",
+          "path": "agents/pr-orchestrator.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "PR Orchestrator",
+          "description": "Lead reviewer that classifies a diff and delegates to specialist agents.",
+          "contentFile": "vision-plugin/agents/pr-orchestrator.md"
+        },
+        {
+          "name": "code-reviewer.md",
+          "path": "agents/code-reviewer.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Code Reviewer",
+          "description": "Checks bugs, architecture fit, conventions, and risky implementation details.",
+          "contentFile": "vision-plugin/agents/code-reviewer.md"
+        },
+        {
+          "name": "security-reviewer.md",
+          "path": "agents/security-reviewer.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Security Reviewer",
+          "description": "Focuses on RBAC, secrets, uploads, webhooks, and API route hardening.",
+          "contentFile": "vision-plugin/agents/security-reviewer.md"
+        },
+        {
+          "name": "performance-reviewer.md",
+          "path": "agents/performance-reviewer.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Performance Reviewer",
+          "description": "Looks for bundle regressions, data-loading waste, and expensive rendering patterns.",
+          "contentFile": "vision-plugin/agents/performance-reviewer.md"
+        },
+        {
+          "name": "test-coverage.md",
+          "path": "agents/test-coverage.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Test Coverage Reviewer",
+          "description": "Flags missing unit, integration, and E2E coverage in changed areas.",
+          "contentFile": "vision-plugin/agents/test-coverage.md"
+        },
+        {
+          "name": "architect.md",
+          "path": "agents/architect.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Architect",
+          "description": "Helps design PIM, DAM, ERP, and e-commerce application architecture with explicit trade-offs.",
+          "contentFile": "vision-plugin/agents/architect.md"
+        }
+      ]
+    },
+    {
+      "name": "skills",
+      "path": "skills",
+      "type": "directory",
+      "badge": "skill",
+      "children": [
+        {
+          "name": "frontend-patterns",
+          "path": "skills/frontend-patterns",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/frontend-patterns/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Frontend Patterns",
+              "description": "Patterns for Next.js admin interfaces, tables, dashboards, forms, and performance.",
+              "contentFile": "vision-plugin/skills/frontend-patterns/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "backend-patterns",
+          "path": "skills/backend-patterns",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/backend-patterns/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Backend Patterns",
+              "description": "Guidance for services, repositories, auth, queues, and structured logging.",
+              "contentFile": "vision-plugin/skills/backend-patterns/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "security-review",
+          "path": "skills/security-review",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/security-review/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Security Review",
+              "description": "OWASP-style checks adapted for RBAC-heavy business applications.",
+              "contentFile": "vision-plugin/skills/security-review/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "e2e-testing",
+          "path": "skills/e2e-testing",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/e2e-testing/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "E2E Testing",
+              "description": "Playwright guidance for multi-step workflows, RBAC, and import or export flows.",
+              "contentFile": "vision-plugin/skills/e2e-testing/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "deployment-patterns",
+          "path": "skills/deployment-patterns",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/deployment-patterns/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Deployment Patterns",
+              "description": "Next.js deployment rules for Docker, CI, health checks, and rollback.",
+              "contentFile": "vision-plugin/skills/deployment-patterns/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "api-design",
+          "path": "skills/api-design",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/api-design/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "API Design",
+              "description": "Resource naming, pagination, filtering, versioning, and error response conventions.",
+              "contentFile": "vision-plugin/skills/api-design/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "database-patterns",
+          "path": "skills/database-patterns",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/database-patterns/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Database Patterns",
+              "description": "Safe migrations, indexing, RLS, and query design for data-heavy catalogs.",
+              "contentFile": "vision-plugin/skills/database-patterns/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "git-workflow",
+          "path": "skills/git-workflow",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/git-workflow/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Git Workflow",
+              "description": "Branch naming, protected branch policy, and PR rules for the plugin rollout.",
+              "contentFile": "vision-plugin/skills/git-workflow/SKILL.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "hooks",
+      "path": "hooks",
+      "type": "directory",
+      "badge": "hooks",
+      "children": [
+        {
+          "name": "hooks.json",
+          "path": "hooks/hooks.json",
+          "type": "file",
+          "feature": "hooks",
+          "badge": "hooks",
+          "label": "Plugin Hook Configuration",
+          "description": "Hook definitions shipped by the plugin.",
+          "contentFile": "vision-plugin/hooks/hooks.json"
+        }
+      ]
+    },
+    {
+      "name": ".mcp.json",
+      "path": ".mcp.json",
+      "type": "file",
+      "feature": "mcp",
+      "badge": "mcp",
+      "label": "Bundled MCP Configuration",
+      "description": "Plugin-scoped MCP servers that start automatically when the plugin is enabled.",
+      "contentFile": "vision-plugin/.mcp.json"
+    },
+    {
+      "name": "scripts",
+      "path": "scripts",
+      "type": "directory",
+      "badge": "hooks",
+      "children": [
+        {
+          "name": "branch-guard.sh",
+          "path": "scripts/branch-guard.sh",
+          "type": "file",
+          "feature": "hooks",
+          "badge": "hooks",
+          "label": "Branch Guard Script",
+          "description": "Shell guard that denies dangerous git pushes from protected branches.",
+          "contentFile": "vision-plugin/scripts/branch-guard.sh"
+        }
+      ]
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "CHANGELOG.md",
+      "type": "file",
+      "feature": "plugins",
+      "badge": "plugins",
+      "label": "Plugin Changelog",
+      "description": "Tracks how the plugin evolves over time.",
+      "contentFile": "vision-plugin/CHANGELOG.md"
+    },
+    {
+      "name": "LICENSE",
+      "path": "LICENSE",
+      "type": "file",
+      "feature": "plugins",
+      "badge": "plugins",
+      "label": "Plugin License",
+      "description": "Distribution policy for the plugin package.",
+      "contentFile": "vision-plugin/LICENSE"
+    }
+  ],
+  "terminal": {
+    "version": "0.2.0",
+    "projectLabel": "vision-plugin",
+    "projectPath": "~/code/vision-plugin",
+    "configPath": ".claude-plugin/plugin.json",
+    "account": "plugin-maintainer@example.com",
+    "plan": "Max (5x usage)",
+    "welcomeTagline": "Inspect the reusable package from its manifest down to agents, skills, hooks, and bundled MCP.",
+    "quickStart": [
+      {
+        "command": "/config",
+        "description": "open the plugin manifest"
+      },
+      {
+        "command": "/status",
+        "description": "inspect the package contents"
+      },
+      {
+        "command": "/doctor",
+        "description": "verify the plugin bundle"
+      },
+      {
+        "command": "/diff",
+        "description": "see how Claude would review plugin changes"
+      }
+    ],
+    "howToExplore": [
+      "Read .claude-plugin/plugin.json for the package metadata and discovery model",
+      "Open README.md to understand the plugin intent and rollout strategy",
+      "Inspect agents, skills, hooks, and .mcp.json to see what gets bundled together",
+      "Switch to my-project to see how a consuming repo enables the package"
+    ],
+    "doctorChecks": [
+      {
+        "label": "Manifest",
+        "detail": "plugin.json found under .claude-plugin",
+        "pass": true,
+        "delay": 320
+      },
+      {
+        "label": "Review agents",
+        "detail": "6 agent files discovered inside the package",
+        "pass": true,
+        "delay": 280
+      },
+      {
+        "label": "Skills",
+        "detail": "8 skills available from the package",
+        "pass": true,
+        "delay": 280
+      },
+      {
+        "label": "Hooks",
+        "detail": "hook definitions and shell guard bundled in the package",
+        "pass": true,
+        "delay": 300
+      },
+      {
+        "label": "Bundled MCP",
+        "detail": "Zeplin configuration found at .mcp.json",
+        "pass": true,
+        "delay": 260
+      }
+    ],
+    "initFound": ".claude-plugin/plugin.json, agents/, skills/, hooks/, .mcp.json",
+    "initTechStack": [
+      "Claude Code plugin package",
+      "Bundled MCP and review workflow",
+      "Shared automation for product teams"
+    ],
+    "initConventions": [
+      "Plugin metadata lives in .claude-plugin/plugin.json",
+      "Reusable Claude automation is grouped into agents, skills, hooks, and MCP",
+      "Consuming repos enable the plugin from their own .claude/settings.json"
+    ],
+    "memoryEntries": [
+      "vision-plugin is a reusable package, not an application repo",
+      "Zeplin is bundled in the plugin through .mcp.json",
+      "Agents and skills are shared across consumer projects",
+      "my-project shows the consumer side while this view shows the package itself"
+    ]
+  }
+}

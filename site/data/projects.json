@@ -1,12 +1,19 @@
 {
-  "defaultProject": "example-project",
+  "defaultProject": "my-project",
   "projects": [
     {
-      "id": "example-project",
-      "label": "example-project",
-      "sidebarLabel": "Example-Project",
-      "sidebarMeta": "installed plugin workspace",
-      "manifest": "data/example-project.json"
+      "id": "my-project",
+      "label": "my-project",
+      "sidebarLabel": "My-Project",
+      "sidebarMeta": "consumer project",
+      "manifest": "data/my-project.json"
+    },
+    {
+      "id": "vision-plugin",
+      "label": "vision-plugin",
+      "sidebarLabel": "Vision-Plugin",
+      "sidebarMeta": "plugin package",
+      "manifest": "data/vision-plugin.json"
     }
   ]
 }

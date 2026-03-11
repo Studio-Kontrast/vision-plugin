@@ -1,8 +1,8 @@
 {
-  // Project-scope MCP config for the consuming workspace.
-  // The plugin can recommend external context sources, but MCP servers
-  // are configured from the project root so each repository keeps
-  // control over its own tokens and integrations.
+  // Plugin-scoped MCP config bundled with vision-plugin.
+  // These servers start automatically when the plugin is enabled,
+  // so consumer projects get the shared external context without
+  // duplicating the configuration in each repository.
 
   "mcpServers": {
     "zeplin": {

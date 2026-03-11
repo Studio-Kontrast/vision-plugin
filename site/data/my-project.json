@@ -1,0 +1,190 @@
+{
+  "project": "my-project",
+  "projectLabel": "my-project",
+  "sidebarLabel": "My-Project",
+  "sidebarMeta": "consumer project",
+  "expandedDirs": [
+    ".claude",
+    "src"
+  ],
+  "welcome": {
+    "label": "// my-project",
+    "title": "Explore a <em>consumer project</em><br>that uses the plugin.",
+    "subtitle": "This simulated application enables <code>vision-plugin</code> from <code>.claude/settings.json</code>. The plugin package itself stays separate; switch to <code>vision-plugin</code> to inspect its shared files.",
+    "secondary": "Start with the project files to see what lives in the repo, then open the plugin view to inspect the reusable package that powers reviews and Zeplin."
+  },
+  "badges": {
+    "memory": {
+      "label": "memory",
+      "color": "#b07a6e"
+    },
+    "config": {
+      "label": "config",
+      "color": "#7a7670"
+    },
+    "plugins": {
+      "label": "plugin",
+      "color": "#a89a48"
+    },
+    "code": {
+      "label": "code",
+      "color": "#5e82a0"
+    }
+  },
+  "features": {
+    "claude-md": {
+      "title": "Project Memory",
+      "description": "App-specific context that stays in the consuming repository.",
+      "order": 1
+    },
+    "settings": {
+      "title": "Project Settings",
+      "description": "Claude settings that enable the shared plugin for this repo.",
+      "order": 2
+    },
+    "code": {
+      "title": "Application Code",
+      "description": "Normal project files that remain in the repo even when shared Claude tooling comes from a plugin.",
+      "order": 3
+    },
+    "plugin": {
+      "title": "Plugin Usage",
+      "description": "How this project depends on the external vision-plugin package.",
+      "order": 4
+    }
+  },
+  "tree": [
+    {
+      "name": ".claude",
+      "path": ".claude",
+      "type": "directory",
+      "badge": "config",
+      "children": [
+        {
+          "name": "settings.json",
+          "path": ".claude/settings.json",
+          "type": "file",
+          "feature": "settings",
+          "badge": "config",
+          "label": "Project Settings",
+          "description": "Project-scoped Claude settings that enable vision-plugin for everyone working in this repo.",
+          "contentFile": "my-project/.claude/settings.json"
+        }
+      ]
+    },
+    {
+      "name": "src",
+      "path": "src",
+      "type": "directory",
+      "badge": "code",
+      "children": [
+        {
+          "name": "index.ts",
+          "path": "src/index.ts",
+          "type": "file",
+          "feature": "code",
+          "badge": "code",
+          "label": "Workspace Entry Point",
+          "description": "A placeholder application entrypoint showing where the project code lives.",
+          "contentFile": "my-project/src/index.ts"
+        }
+      ]
+    },
+    {
+      "name": "CLAUDE.md",
+      "path": "CLAUDE.md",
+      "type": "file",
+      "feature": "claude-md",
+      "badge": "memory",
+      "label": "Project Memory",
+      "description": "Project-specific rules and architecture notes that stay in the consuming repo.",
+      "contentFile": "my-project/CLAUDE.md"
+    },
+    {
+      "name": "package.json",
+      "path": "package.json",
+      "type": "file",
+      "feature": "plugin",
+      "badge": "plugins",
+      "label": "Workspace Package",
+      "description": "The application package that sits next to the Claude settings and enabled plugin.",
+      "contentFile": "my-project/package.json"
+    }
+  ],
+  "terminal": {
+    "version": "0.2.0",
+    "projectLabel": "my-project",
+    "projectPath": "~/code/my-project",
+    "configPath": ".claude/settings.json",
+    "account": "plugin-maintainer@example.com",
+    "plan": "Max (5x usage)",
+    "welcomeTagline": "Inspect the consumer project first, then switch to vision-plugin to see the shared package behind it.",
+    "quickStart": [
+      {
+        "command": "/config",
+        "description": "open the project Claude settings"
+      },
+      {
+        "command": "/status",
+        "description": "inspect the consumer repo state"
+      },
+      {
+        "command": "/doctor",
+        "description": "verify the project and plugin setup"
+      },
+      {
+        "command": "/diff",
+        "description": "see how Claude would review project changes"
+      }
+    ],
+    "howToExplore": [
+      "Open .claude/settings.json to see vision-plugin enabled for the repo",
+      "Read CLAUDE.md for project-specific rules that do not belong in the plugin",
+      "Open src/ to see where the real application code still lives",
+      "Switch to vision-plugin to inspect the shared package itself"
+    ],
+    "doctorChecks": [
+      {
+        "label": "CLAUDE.md",
+        "detail": "workspace memory loaded from project root",
+        "pass": true,
+        "delay": 320
+      },
+      {
+        "label": "Plugin activation",
+        "detail": "vision-plugin enabled in .claude/settings.json",
+        "pass": true,
+        "delay": 320
+      },
+      {
+        "label": "Source tree",
+        "detail": "application entrypoint found at src/index.ts",
+        "pass": true,
+        "delay": 300
+      },
+      {
+        "label": "External context",
+        "detail": "Zeplin comes from the enabled plugin, not from the repo root",
+        "pass": true,
+        "delay": 260
+      }
+    ],
+    "initFound": "CLAUDE.md, .claude/settings.json, src/index.ts",
+    "initTechStack": [
+      "Consumer project workspace",
+      "Project-scoped plugin enablement",
+      "Plugin-provided Zeplin MCP"
+    ],
+    "initConventions": [
+      "App-specific code and rules stay in the repo",
+      "Shared Claude automation comes from vision-plugin",
+      "Plugin internals are explored in the separate vision-plugin view"
+    ],
+    "memoryEntries": [
+      "This repo enables vision-plugin from .claude/settings.json",
+      "Zeplin is provided by the plugin, so the project does not need its own .mcp.json by default",
+      "CLAUDE.md stays project-specific even when reviews and MCP come from a shared plugin",
+      "Application code still lives in src/, outside the plugin package"
+    ]
+  }
+}
