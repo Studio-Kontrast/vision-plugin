@@ -43,13 +43,13 @@ class Terminal {
 
   _buildConfig() {
     const terminal = this.manifest.terminal || {};
-    const projectLabel = terminal.projectLabel || this.manifest.projectLabel || this.manifest.project || 'my-project';
+    const projectLabel = terminal.projectLabel || this.manifest.projectLabel || this.manifest.project || 'example-project';
 
     return {
       version: terminal.version || '1.0.42',
       model: terminal.model || 'claude-opus-4-6',
       projectLabel,
-      projectPath: terminal.projectPath || `~/code/${this.manifest.project || 'my-project'}`,
+      projectPath: terminal.projectPath || `~/code/${this.manifest.project || 'example-project'}`,
       configPath: terminal.configPath || '.claude/settings.json',
       account: terminal.account || 'user@example.com',
       plan: terminal.plan || 'Max (5x usage)',

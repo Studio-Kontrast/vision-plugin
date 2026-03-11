@@ -158,6 +158,7 @@ const Icons = {
       'plugins': this.featurePlugins,
       'marketplaces': this.featureMarketplaces,
       'docs': this.featureClaudeMd,
+      'code': this.fileCode,
     };
     const fn = map[id];
     return fn ? fn.call(this, size) : this.fileGeneric(size);
