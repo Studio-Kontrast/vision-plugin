@@ -49,6 +49,14 @@ html, body {
   margin-right: var(--space-lg);
 }
 
+.traffic-lights,
+.mobile-sidebar-toggle,
+.mobile-terminal-toggle,
+.project-switcher,
+.title-bar__badge {
+  -webkit-app-region: no-drag;
+}
+
 .traffic-light {
   width: 12px;
   height: 12px;
@@ -84,13 +92,55 @@ html, body {
 .traffic-light--maximize { background: #5eab5e; }
 .traffic-light--maximize::after { content: '\2922'; font-size: 7px; }
 
-.title-bar__text {
+.title-bar__center {
   flex: 1;
-  text-align: center;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.title-bar__app-name {
   font-size: 12px;
   color: var(--text-muted);
   font-family: var(--font-mono);
   letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.project-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid var(--border-default);
+  background: rgba(20, 18, 17, 0.72);
+}
+
+.project-switcher__btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
+  padding: 7px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.1s, background 0.1s;
+  white-space: nowrap;
+}
+
+.project-switcher__btn:hover {
+  color: var(--text-secondary);
+  background: var(--bg-hover);
+}
+
+.project-switcher__btn.active {
+  color: var(--text-bright);
+  background: var(--accent-muted);
 }
 
 .title-bar__badge {
@@ -132,13 +182,25 @@ html, body {
 
 .sidebar__header {
   padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar__header-label {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-muted);
-  border-bottom: 1px solid var(--border-subtle);
-  flex-shrink: 0;
+  font-family: var(--font-mono);
+}
+
+.sidebar__header-meta {
+  font-size: 10px;
+  color: var(--text-secondary);
   font-family: var(--font-mono);
 }
 
@@ -359,15 +421,38 @@ html, body {
     padding: 0 var(--space-sm);
   }
 
-  .title-bar__text {
-    font-size: 11px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  .title-bar__center {
+    gap: 6px;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .title-bar__app-name {
+    display: none;
+  }
+
+  .project-switcher {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 2px;
+    scrollbar-width: none;
+  }
+
+  .project-switcher::-webkit-scrollbar {
+    display: none;
+  }
+
+  .project-switcher__btn {
+    padding: 6px 8px;
+    font-size: 10px;
   }
 
   .title-bar__badge img {
     height: 16px;
+  }
+
+  .title-bar__badge {
+    display: none;
   }
 
   /* Main layout — content fills the space */

@@ -4,6 +4,11 @@
 
 class App {
   constructor() {
+    this.defaultProjectId = null;
+    this.projects = [];
+    this.projectMap = new Map();
+    this.activeProjectId = null;
+    this.activeProject = null;
     this.manifest = null;
     this.explorer = null;
     this.contentLoader = null;
@@ -12,47 +17,24 @@ class App {
   }
 
   async init() {
-    // Load manifest
     try {
-      const response = await fetch('data/manifest.json');
-      this.manifest = await response.json();
+      const response = await fetch('data/projects.json');
+      const registry = await response.json();
+      this.defaultProjectId = registry.defaultProject;
+      this.projects = registry.projects || [];
+      this.projectMap = new Map(this.projects.map((project) => [project.id, project]));
     } catch (e) {
-      console.error('Failed to load manifest.json:', e);
+      console.error('Failed to load project registry:', e);
       document.getElementById('content').innerHTML =
-        '<p style="color:#ff5f57;padding:20px;">Failed to load manifest.json. Make sure you\'re serving the site directory.</p>';
+        '<p style="color:#ff5f57;padding:20px;">Failed to load project data. Make sure you\'re serving the site directory.</p>';
       return;
     }
 
-    // Count features
-    const featureCount = Object.keys(this.manifest.features).length;
-
-    // Initialize components
-    this.contentLoader = new ContentLoader(this.manifest);
-    this.progress = new ProgressTracker(featureCount);
-
-    this.explorer = new FileExplorer(this.manifest, (node) => {
-      this._onFileSelected(node);
-    });
-
-    // Render
-    this.explorer.render();
-    this.contentLoader.showWelcome();
-    this.progress.init();
-
-    // Terminal
-    this.terminal = new Terminal();
-    this.terminal.init();
-
-    // Mobile UI
+    this._renderProjectSwitcher();
     this._setupMobile();
-
-    // Event listeners
     this._setupEventListeners();
+    await this._loadProject(this._getInitialProjectId(), { preserveHash: true });
 
-    // Hash navigation
-    this._handleHash();
-
-    // Global reference
     window.app = this;
   }
 
@@ -61,7 +43,123 @@ class App {
     if (node.feature) {
       this.progress.visit(node.feature);
     }
-    history.replaceState(null, '', '#' + node.path);
+    const url = new URL(window.location.href);
+    url.hash = node.path;
+    history.replaceState(null, '', url.pathname + url.search + url.hash);
+    if (this._isMobile()) {
+      this._hideSidebar();
+    }
+  }
+
+  _getInitialProjectId() {
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = params.get('project');
+    if (fromUrl && this.projectMap.has(fromUrl)) {
+      return fromUrl;
+    }
+
+    const fromStorage = localStorage.getItem('tcc-active-project');
+    if (fromStorage && this.projectMap.has(fromStorage)) {
+      return fromStorage;
+    }
+
+    if (this.defaultProjectId && this.projectMap.has(this.defaultProjectId)) {
+      return this.defaultProjectId;
+    }
+
+    return this.projects[0]?.id || null;
+  }
+
+  async _loadProject(projectId, { preserveHash = false } = {}) {
+    const project = this.projectMap.get(projectId) || this.projectMap.get(this.defaultProjectId) || this.projects[0];
+    if (!project) return;
+
+    try {
+      const response = await fetch(project.manifest);
+      this.manifest = await response.json();
+    } catch (e) {
+      console.error(`Failed to load manifest for ${project.id}:`, e);
+      document.getElementById('content').innerHTML =
+        `<p style="color:#ff5f57;padding:20px;">Failed to load ${project.id}. Refresh the page and try again.</p>`;
+      return;
+    }
+
+    this.activeProjectId = project.id;
+    this.activeProject = project;
+    localStorage.setItem('tcc-active-project', project.id);
+    this._syncLocation({ preserveHash });
+    this._updateChrome();
+
+    const featureCount = Object.keys(this.manifest.features || {}).length;
+    this.contentLoader = new ContentLoader(this.manifest);
+    this.progress = new ProgressTracker(featureCount, `tcc-progress:${project.id}`);
+    this.explorer = new FileExplorer(this.manifest, (node) => {
+      this._onFileSelected(node);
+    });
+    if (!this.terminal) {
+      this.terminal = new Terminal(this.manifest);
+    } else {
+      this.terminal.setManifest(this.manifest);
+    }
+
+    this.explorer.render();
+    this.contentLoader.showWelcome();
+    this.progress.init();
+    this.terminal.init();
+    this._renderProjectSwitcher();
+    this._handleHash();
+  }
+
+  _syncLocation({ preserveHash = false } = {}) {
+    const url = new URL(window.location.href);
+    if (this.activeProjectId && this.activeProjectId !== this.defaultProjectId) {
+      url.searchParams.set('project', this.activeProjectId);
+    } else {
+      url.searchParams.delete('project');
+    }
+
+    if (!preserveHash) {
+      url.hash = '';
+    }
+
+    history.replaceState(null, '', url.pathname + url.search + url.hash);
+  }
+
+  _updateChrome() {
+    const title = this.activeProject?.label || this.manifest?.projectLabel || this.manifest?.project || 'project';
+    const sidebarLabel = this.activeProject?.sidebarLabel || this.manifest?.sidebarLabel || title;
+    const sidebarMeta = this.activeProject?.sidebarMeta || this.manifest?.sidebarMeta || '';
+
+    const sidebarLabelEl = document.getElementById('sidebar-project-label');
+    const sidebarMetaEl = document.getElementById('sidebar-project-meta');
+
+    if (sidebarLabelEl) sidebarLabelEl.textContent = sidebarLabel;
+    if (sidebarMetaEl) sidebarMetaEl.textContent = sidebarMeta;
+
+    document.title = `Explore Claude Code · ${title}`;
+  }
+
+  _renderProjectSwitcher() {
+    const container = document.getElementById('project-switcher');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    for (const project of this.projects) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'project-switcher__btn';
+      btn.textContent = project.label;
+      btn.setAttribute('aria-pressed', project.id === this.activeProjectId ? 'true' : 'false');
+      if (project.id === this.activeProjectId) {
+        btn.classList.add('active');
+      }
+      btn.addEventListener('click', async () => {
+        if (project.id === this.activeProjectId) return;
+        await this._loadProject(project.id);
+      });
+      container.appendChild(btn);
+    }
   }
 
   _setupEventListeners() {
@@ -173,28 +271,6 @@ class App {
     const sidebar = document.querySelector('.sidebar');
     const terminalPanel = document.getElementById('terminal-panel');
 
-    // Helpers that use inline styles for iOS Safari reliability
-    const showSidebar = () => {
-      sidebar.classList.add('mobile-open');
-      sidebar.style.display = 'flex';
-      backdrop.classList.add('visible');
-      backdrop.style.display = 'block';
-    };
-    const hideSidebar = () => {
-      sidebar.classList.remove('mobile-open');
-      sidebar.style.display = 'none';
-      backdrop.classList.remove('visible');
-      backdrop.style.display = 'none';
-    };
-    const showTerminal = () => {
-      terminalPanel.classList.add('mobile-open');
-      terminalPanel.style.display = 'flex';
-    };
-    const hideTerminal = () => {
-      terminalPanel.classList.remove('mobile-open');
-      terminalPanel.style.display = 'none';
-    };
-
     // Hide sidebar and terminal on initial load (mobile)
     if (this._isMobile()) {
       sidebar.style.display = 'none';
@@ -205,10 +281,10 @@ class App {
     if (sidebarToggle) {
       sidebarToggle.addEventListener('click', () => {
         if (sidebar.classList.contains('mobile-open')) {
-          hideSidebar();
+          this._hideSidebar();
         } else {
-          hideTerminal();
-          showSidebar();
+          this._hideTerminal();
+          this._showSidebar();
         }
       });
     }
@@ -217,10 +293,10 @@ class App {
     if (terminalToggle) {
       terminalToggle.addEventListener('click', () => {
         if (terminalPanel.classList.contains('mobile-open')) {
-          hideTerminal();
+          this._hideTerminal();
         } else {
-          hideSidebar();
-          showTerminal();
+          this._hideSidebar();
+          this._showTerminal();
           const input = document.getElementById('terminal-input');
           if (input) setTimeout(() => input.focus(), 300);
         }
@@ -230,18 +306,9 @@ class App {
     // Backdrop closes sidebar
     if (backdrop) {
       backdrop.addEventListener('click', () => {
-        hideSidebar();
+        this._hideSidebar();
       });
     }
-
-    // Close sidebar on file selection (mobile only)
-    const origOnFileSelected = this._onFileSelected.bind(this);
-    this._onFileSelected = async (node) => {
-      await origOnFileSelected(node);
-      if (this._isMobile()) {
-        hideSidebar();
-      }
-    };
 
     // Handle orientation change / resize across breakpoint
     window.addEventListener('resize', () => {
@@ -255,6 +322,44 @@ class App {
         backdrop.style.display = '';
       }
     });
+  }
+
+  _showSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const backdrop = document.getElementById('mobile-backdrop');
+    if (!sidebar || !backdrop) return;
+
+    sidebar.classList.add('mobile-open');
+    sidebar.style.display = 'flex';
+    backdrop.classList.add('visible');
+    backdrop.style.display = 'block';
+  }
+
+  _hideSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const backdrop = document.getElementById('mobile-backdrop');
+    if (!sidebar || !backdrop) return;
+
+    sidebar.classList.remove('mobile-open');
+    sidebar.style.display = 'none';
+    backdrop.classList.remove('visible');
+    backdrop.style.display = 'none';
+  }
+
+  _showTerminal() {
+    const terminalPanel = document.getElementById('terminal-panel');
+    if (!terminalPanel) return;
+
+    terminalPanel.classList.add('mobile-open');
+    terminalPanel.style.display = 'flex';
+  }
+
+  _hideTerminal() {
+    const terminalPanel = document.getElementById('terminal-panel');
+    if (!terminalPanel) return;
+
+    terminalPanel.classList.remove('mobile-open');
+    terminalPanel.style.display = 'none';
   }
 
   _enterVoid() {
@@ -685,6 +790,7 @@ class App {
   }
 
   _navigate(direction) {
+    if (!this.explorer) return;
     const adjacent = this.explorer.getAdjacentFile(direction);
     if (adjacent) {
       this.explorer.selectPath(adjacent.path);

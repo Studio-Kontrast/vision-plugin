@@ -157,6 +157,7 @@ const Icons = {
       'agents': this.featureAgents,
       'plugins': this.featurePlugins,
       'marketplaces': this.featureMarketplaces,
+      'docs': this.featureClaudeMd,
     };
     const fn = map[id];
     return fn ? fn.call(this, size) : this.fileGeneric(size);

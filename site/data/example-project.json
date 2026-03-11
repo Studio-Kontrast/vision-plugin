@@ -1,0 +1,471 @@
+{
+  "project": "example-project",
+  "projectLabel": "example-projet",
+  "sidebarLabel": "Example-Projet",
+  "sidebarMeta": "vision plugin repo",
+  "expandedDirs": [
+    ".claude-plugin",
+    "agents",
+    "skills"
+  ],
+  "welcome": {
+    "label": "// vision-plugin",
+    "title": "Explore the <em>Claude Code plugin</em><br>we want to ship.",
+    "subtitle": "This workspace exposes a shareable plugin structure for Studio Kontrast projects: <code>.claude-plugin/plugin.json</code>, review agents, domain skills, hooks, MCP configuration, and the docs needed to install it in product repos.",
+    "secondary": "Switch back to <code>my-project</code> any time to compare the generic Claude Code concepts with a production-oriented plugin."
+  },
+  "badges": {
+    "plugins": {
+      "label": "plugin",
+      "color": "#a89a48"
+    },
+    "agents": {
+      "label": "agents",
+      "color": "#b8965e"
+    },
+    "skill": {
+      "label": "skill",
+      "color": "#5e918a"
+    },
+    "hooks": {
+      "label": "hooks",
+      "color": "#ad6e5e"
+    },
+    "mcp": {
+      "label": "MCP",
+      "color": "#6e9468"
+    },
+    "docs": {
+      "label": "docs",
+      "color": "#8d8476"
+    }
+  },
+  "features": {
+    "plugins": {
+      "title": "Plugin Manifest",
+      "description": "How the plugin is named, versioned, and distributed across projects.",
+      "order": 1
+    },
+    "agents": {
+      "title": "Review Agents",
+      "description": "Subagents for PR orchestration, code review, security, performance, testing, and architecture.",
+      "order": 2
+    },
+    "skills": {
+      "title": "Domain Skills",
+      "description": "Reusable knowledge packs for Next.js frontend, backend, API, security, testing, deployment, and database work.",
+      "order": 3
+    },
+    "hooks": {
+      "title": "Hooks & Guards",
+      "description": "Automation that protects branch policy and keeps plugin changes disciplined.",
+      "order": 4
+    },
+    "mcp": {
+      "title": "MCP Integrations",
+      "description": "External context sources such as Zeplin that support design engineering work.",
+      "order": 5
+    },
+    "docs": {
+      "title": "Project Docs",
+      "description": "README, changelog, and licensing notes that explain installation and rollout.",
+      "order": 6
+    }
+  },
+  "tree": [
+    {
+      "name": ".claude-plugin",
+      "path": ".claude-plugin",
+      "type": "directory",
+      "badge": "plugins",
+      "children": [
+        {
+          "name": "plugin.json",
+          "path": ".claude-plugin/plugin.json",
+          "type": "file",
+          "feature": "plugins",
+          "badge": "plugins",
+          "label": "Plugin Manifest",
+          "description": "The identity card for the plugin: namespace, version, metadata, and distribution intent.",
+          "contentFile": "example-project/.claude-plugin/plugin.json"
+        }
+      ]
+    },
+    {
+      "name": "agents",
+      "path": "agents",
+      "type": "directory",
+      "badge": "agents",
+      "children": [
+        {
+          "name": "pr-orchestrator.md",
+          "path": "agents/pr-orchestrator.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "PR Orchestrator",
+          "description": "Lead reviewer that classifies a diff and delegates to specialist agents.",
+          "contentFile": "example-project/agents/pr-orchestrator.md"
+        },
+        {
+          "name": "code-reviewer.md",
+          "path": "agents/code-reviewer.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Code Reviewer",
+          "description": "Checks bugs, architecture fit, conventions, and risky implementation details.",
+          "contentFile": "example-project/agents/code-reviewer.md"
+        },
+        {
+          "name": "security-reviewer.md",
+          "path": "agents/security-reviewer.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Security Reviewer",
+          "description": "Focuses on RBAC, secrets, uploads, webhooks, and API route hardening.",
+          "contentFile": "example-project/agents/security-reviewer.md"
+        },
+        {
+          "name": "performance-reviewer.md",
+          "path": "agents/performance-reviewer.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Performance Reviewer",
+          "description": "Looks for bundle regressions, data-loading waste, and expensive rendering patterns.",
+          "contentFile": "example-project/agents/performance-reviewer.md"
+        },
+        {
+          "name": "test-coverage.md",
+          "path": "agents/test-coverage.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Test Coverage Reviewer",
+          "description": "Flags missing unit, integration, and E2E coverage in changed areas.",
+          "contentFile": "example-project/agents/test-coverage.md"
+        },
+        {
+          "name": "architect.md",
+          "path": "agents/architect.md",
+          "type": "file",
+          "feature": "agents",
+          "badge": "agents",
+          "label": "Architect",
+          "description": "Helps design PIM, DAM, ERP, and e-commerce application architecture with explicit trade-offs.",
+          "contentFile": "example-project/agents/architect.md"
+        }
+      ]
+    },
+    {
+      "name": "skills",
+      "path": "skills",
+      "type": "directory",
+      "badge": "skill",
+      "children": [
+        {
+          "name": "frontend-patterns",
+          "path": "skills/frontend-patterns",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/frontend-patterns/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Frontend Patterns",
+              "description": "Patterns for Next.js admin interfaces, tables, dashboards, forms, and performance.",
+              "contentFile": "example-project/skills/frontend-patterns/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "backend-patterns",
+          "path": "skills/backend-patterns",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/backend-patterns/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Backend Patterns",
+              "description": "Guidance for services, repositories, auth, queues, and structured logging.",
+              "contentFile": "example-project/skills/backend-patterns/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "security-review",
+          "path": "skills/security-review",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/security-review/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Security Review",
+              "description": "OWASP-style checks adapted for RBAC-heavy business applications.",
+              "contentFile": "example-project/skills/security-review/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "e2e-testing",
+          "path": "skills/e2e-testing",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/e2e-testing/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "E2E Testing",
+              "description": "Playwright guidance for multi-step workflows, RBAC, and import or export flows.",
+              "contentFile": "example-project/skills/e2e-testing/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "deployment-patterns",
+          "path": "skills/deployment-patterns",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/deployment-patterns/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Deployment Patterns",
+              "description": "Next.js deployment rules for Docker, CI, health checks, and rollback.",
+              "contentFile": "example-project/skills/deployment-patterns/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "api-design",
+          "path": "skills/api-design",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/api-design/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "API Design",
+              "description": "Resource naming, pagination, filtering, versioning, and error response conventions.",
+              "contentFile": "example-project/skills/api-design/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "database-patterns",
+          "path": "skills/database-patterns",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/database-patterns/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Database Patterns",
+              "description": "Safe migrations, indexing, RLS, and query design for data-heavy catalogs.",
+              "contentFile": "example-project/skills/database-patterns/SKILL.md"
+            }
+          ]
+        },
+        {
+          "name": "git-workflow",
+          "path": "skills/git-workflow",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SKILL.md",
+              "path": "skills/git-workflow/SKILL.md",
+              "type": "file",
+              "feature": "skills",
+              "badge": "skill",
+              "label": "Git Workflow",
+              "description": "Branch naming, protected branch policy, and PR rules for the plugin rollout.",
+              "contentFile": "example-project/skills/git-workflow/SKILL.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "hooks",
+      "path": "hooks",
+      "type": "directory",
+      "badge": "hooks",
+      "children": [
+        {
+          "name": "hooks.json",
+          "path": "hooks/hooks.json",
+          "type": "file",
+          "feature": "hooks",
+          "badge": "hooks",
+          "label": "Hook Configuration",
+          "description": "Plugin-scoped hook definitions that protect git pushes and remind contributors to keep docs aligned.",
+          "contentFile": "example-project/hooks/hooks.json"
+        }
+      ]
+    },
+    {
+      "name": ".mcp.json",
+      "path": ".mcp.json",
+      "type": "file",
+      "feature": "mcp",
+      "badge": "mcp",
+      "label": "MCP Configuration",
+      "description": "Project-scoped external context, starting with Zeplin for design specs.",
+      "contentFile": "example-project/.mcp.json"
+    },
+    {
+      "name": "scripts",
+      "path": "scripts",
+      "type": "directory",
+      "badge": "hooks",
+      "children": [
+        {
+          "name": "branch-guard.sh",
+          "path": "scripts/branch-guard.sh",
+          "type": "file",
+          "feature": "hooks",
+          "badge": "hooks",
+          "label": "Branch Guard Script",
+          "description": "Shell guard that denies dangerous `git push` commands from protected branches.",
+          "contentFile": "example-project/scripts/branch-guard.sh"
+        }
+      ]
+    },
+    {
+      "name": "README.md",
+      "path": "README.md",
+      "type": "file",
+      "feature": "docs",
+      "badge": "docs",
+      "label": "README",
+      "description": "Overview, installation instructions, and rollout advice for the plugin.",
+      "contentFile": "example-project/README.md"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "path": "CHANGELOG.md",
+      "type": "file",
+      "feature": "docs",
+      "badge": "docs",
+      "label": "Changelog",
+      "description": "Initial release notes for the plugin scaffold.",
+      "contentFile": "example-project/CHANGELOG.md"
+    },
+    {
+      "name": "LICENSE",
+      "path": "LICENSE",
+      "type": "file",
+      "feature": "docs",
+      "badge": "docs",
+      "label": "License",
+      "description": "Distribution status for the plugin while it remains internal.",
+      "contentFile": "example-project/LICENSE"
+    }
+  ],
+  "terminal": {
+    "version": "0.1.0",
+    "projectLabel": "example-projet",
+    "projectPath": "~/code/example-project",
+    "configPath": ".claude-plugin/plugin.json",
+    "account": "plugin-maintainer@example.com",
+    "plan": "Max (5x usage)",
+    "welcomeTagline": "Inspect the plugin manifest, then drill into the review agents and domain skills that make it reusable.",
+    "quickStart": [
+      {
+        "command": "/status",
+        "description": "inspect the active plugin workspace"
+      },
+      {
+        "command": "/config",
+        "description": "jump to .claude-plugin/plugin.json"
+      },
+      {
+        "command": "/doctor",
+        "description": "validate the review pipeline scaffold"
+      },
+      {
+        "command": "/memory",
+        "description": "see the project defaults captured for the team"
+      }
+    ],
+    "howToExplore": [
+      "Start with the plugin manifest to see the namespace and metadata",
+      "Open the review agents and follow their related files into skills",
+      "Finish in the README to see installation and rollout guidance"
+    ],
+    "doctorChecks": [
+      {
+        "label": "Plugin manifest",
+        "detail": ".claude-plugin/plugin.json loaded",
+        "pass": true,
+        "delay": 420
+      },
+      {
+        "label": "Review agents",
+        "detail": "6 agent definitions discovered",
+        "pass": true,
+        "delay": 320
+      },
+      {
+        "label": "Domain skills",
+        "detail": "8 skills indexed for auto-loading",
+        "pass": true,
+        "delay": 320
+      },
+      {
+        "label": "Hooks",
+        "detail": "branch guard ready for git push checks",
+        "pass": true,
+        "delay": 280
+      },
+      {
+        "label": "MCP servers",
+        "detail": "Zeplin configured at project scope",
+        "pass": true,
+        "delay": 300
+      },
+      {
+        "label": "Docs",
+        "detail": "README, changelog, and license present",
+        "pass": true,
+        "delay": 260
+      }
+    ],
+    "initFound": ".claude-plugin/, agents/, skills/, hooks/, scripts/",
+    "initTechStack": [
+      "Plugin manifest + markdown components",
+      "Next.js architecture playbooks",
+      "Hook-driven git safety rules"
+    ],
+    "initConventions": [
+      "PRs target staging, never production directly",
+      "Agents report only high-confidence findings",
+      "Skills stay focused and domain-specific"
+    ],
+    "memoryEntries": [
+      "Backoffice apps use RBAC with admin, manager, and contributor roles",
+      "Review verdicts escalate only when confidence is above 80%",
+      "Protected branches are staging and production",
+      "Zeplin remains the primary design context source",
+      "Database guidance must assume large product catalogs and order history"
+    ]
+  }
+}

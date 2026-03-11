@@ -1,0 +1,32 @@
+{
+  // Plugin-level hook configuration.
+  //
+  // Hooks run whenever Claude reaches the matching lifecycle event.
+  // Here we block unsafe git pushes and keep contributors mindful
+  // about syncing docs when they edit the plugin.
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/branch-guard.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf 'Remember to update README.md or CHANGELOG.md if the plugin surface changed.\\n'"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -4,7 +4,9 @@
  */
 
 class Terminal {
-  constructor() {
+  constructor(manifest = {}) {
+    this.manifest = manifest;
+    this.config = this._buildConfig();
     this.history = [];
     this.historyIndex = -1;
     this.isAnimating = false;
@@ -13,6 +15,9 @@ class Terminal {
     this.panel = null;
     this.output = null;
     this.input = null;
+    this._inputReady = false;
+    this._headerReady = false;
+    this._resizeReady = false;
   }
 
   init() {
@@ -21,13 +26,78 @@ class Terminal {
     this.input = document.getElementById('terminal-input');
     if (!this.panel || !this.output || !this.input) return;
 
+    this.output.innerHTML = '';
     this._setupInput();
     this._setupHeader();
     this._setupResize();
     this._showWelcome();
   }
 
+  setManifest(manifest = {}) {
+    this.manifest = manifest;
+    this.config = this._buildConfig();
+    this.history = [];
+    this.historyIndex = -1;
+    this.isAnimating = false;
+  }
+
+  _buildConfig() {
+    const terminal = this.manifest.terminal || {};
+    const projectLabel = terminal.projectLabel || this.manifest.projectLabel || this.manifest.project || 'my-project';
+
+    return {
+      version: terminal.version || '1.0.42',
+      model: terminal.model || 'claude-opus-4-6',
+      projectLabel,
+      projectPath: terminal.projectPath || `~/code/${this.manifest.project || 'my-project'}`,
+      configPath: terminal.configPath || '.claude/settings.json',
+      account: terminal.account || 'user@example.com',
+      plan: terminal.plan || 'Max (5x usage)',
+      welcomeTagline: terminal.welcomeTagline || 'Learn by doing. Every file is a lesson.<br>Every folder is a chapter.',
+      quickStart: terminal.quickStart || [
+        { command: '/help', description: 'list all commands' },
+        { command: '/init', description: 'watch CLAUDE.md get created' },
+        { command: '/doctor', description: 'run a health check' },
+        { command: '/diff', description: 'see a live diff demo' },
+      ],
+      howToExplore: terminal.howToExplore || [
+        'Browse the file tree on the left',
+        'Click any file to learn what it does',
+        'Try commands here to see them in action',
+      ],
+      doctorChecks: terminal.doctorChecks || [
+        { label: 'Authentication', detail: 'authenticated as user@example.com', pass: true, delay: 500 },
+        { label: 'Model access', detail: 'claude-opus-4-6 available', pass: true, delay: 400 },
+        { label: 'Git repository', detail: 'clean working tree', pass: true, delay: 350 },
+        { label: 'Node.js', detail: 'v22.1.0', pass: true, delay: 300 },
+        { label: 'MCP servers', detail: '2 connected (filesystem, github)', pass: true, delay: 450 },
+        { label: 'Permissions', detail: 'settings.json loaded', pass: true, delay: 300 },
+        { label: 'CLAUDE.md', detail: 'found at project root', pass: true, delay: 350 },
+      ],
+      initFound: terminal.initFound || 'package.json, tsconfig.json, src/',
+      initTechStack: terminal.initTechStack || [
+        'TypeScript + React',
+        'Vite for bundling',
+        'Tailwind CSS',
+      ],
+      initConventions: terminal.initConventions || [
+        'Use functional components',
+        'Prefer named exports',
+        'Tests in __tests__/ directories',
+      ],
+      memoryEntries: terminal.memoryEntries || [
+        'User prefers functional components over classes',
+        'Always run tests with --coverage flag',
+        'Project uses pnpm, not npm',
+        'Prefer named exports over default exports',
+        'Error messages should be user-friendly, not technical',
+      ],
+    };
+  }
+
   _setupInput() {
+    if (this._inputReady) return;
+
     this.input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
@@ -47,9 +117,12 @@ class Terminal {
     this.input.addEventListener('keydown', (e) => {
       e.stopPropagation();
     });
+    this._inputReady = true;
   }
 
   _setupHeader() {
+    if (this._headerReady) return;
+
     const header = this.panel.querySelector('.terminal-header');
     const chevron = this.panel.querySelector('.terminal-header__chevron');
 
@@ -76,6 +149,8 @@ class Terminal {
         handleToggle();
       });
     }
+
+    this._headerReady = true;
   }
 
   _closeMobile() {
@@ -84,6 +159,8 @@ class Terminal {
   }
 
   _setupResize() {
+    if (this._resizeReady) return;
+
     const handle = this.panel.querySelector('.terminal-resize');
     if (!handle) return;
 
@@ -118,6 +195,8 @@ class Terminal {
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     });
+
+    this._resizeReady = true;
   }
 
   _toggleCollapse() {
@@ -129,6 +208,20 @@ class Terminal {
   }
 
   _showWelcome() {
+    const quickStartRows = this.config.quickStart.map(({ command, description }) => `
+      <div class="term-banner-cmd-row">
+        <span class="term-text--accent">${this._esc(command)}</span>
+        <span class="term-text--dim">- ${this._esc(description)}</span>
+      </div>
+    `).join('');
+
+    const exploreSteps = this.config.howToExplore.map((step, index) => `
+      <div class="term-banner-step">
+        <span class="term-banner-step__num">${index + 1}</span>
+        <span>${this._esc(step)}</span>
+      </div>
+    `).join('');
+
     this._appendHtml(`
       <div class="term-welcome-banner">
         <div class="term-brand">
@@ -146,48 +239,21 @@ class Terminal {
         </div>
 
         <div class="term-banner-tagline">
-          Learn by doing. Every file is a lesson.<br>
-          Every folder is a chapter.
+          ${this.config.welcomeTagline}
         </div>
 
         <div class="term-banner-divider"></div>
 
         <div class="term-banner-section">
           <div class="term-banner-section__title">Quick Start</div>
-          <div class="term-banner-cmd-row">
-            <span class="term-text--accent">/help</span>
-            <span class="term-text--dim">- list all commands</span>
-          </div>
-          <div class="term-banner-cmd-row">
-            <span class="term-text--accent">/init</span>
-            <span class="term-text--dim">- watch CLAUDE.md get created</span>
-          </div>
-          <div class="term-banner-cmd-row">
-            <span class="term-text--accent">/doctor</span>
-            <span class="term-text--dim">- run a health check</span>
-          </div>
-          <div class="term-banner-cmd-row">
-            <span class="term-text--accent">/diff</span>
-            <span class="term-text--dim">- see a live diff demo</span>
-          </div>
+          ${quickStartRows}
         </div>
 
         <div class="term-banner-divider"></div>
 
         <div class="term-banner-section">
           <div class="term-banner-section__title">How to Explore</div>
-          <div class="term-banner-step">
-            <span class="term-banner-step__num">1</span>
-            <span>Browse the file tree on the left</span>
-          </div>
-          <div class="term-banner-step">
-            <span class="term-banner-step__num">2</span>
-            <span>Click any file to learn what it does</span>
-          </div>
-          <div class="term-banner-step">
-            <span class="term-banner-step__num">3</span>
-            <span>Try commands here to see them in action</span>
-          </div>
+          ${exploreSteps}
         </div>
 
         <div class="term-banner-divider"></div>
@@ -195,15 +261,15 @@ class Terminal {
         <div class="term-banner-info">
           <div class="term-banner-row">
             <span class="term-banner-key">version</span>
-            <span class="term-banner-val">1.0.42</span>
+            <span class="term-banner-val">${this._esc(this.config.version)}</span>
           </div>
           <div class="term-banner-row">
             <span class="term-banner-key">model</span>
-            <span class="term-banner-val term-text--accent">claude-opus-4-6</span>
+            <span class="term-banner-val term-text--accent">${this._esc(this.config.model)}</span>
           </div>
           <div class="term-banner-row">
             <span class="term-banner-key">project</span>
-            <span class="term-banner-val">my-project</span>
+            <span class="term-banner-val">${this._esc(this.config.projectLabel)}</span>
           </div>
         </div>
       </div>
@@ -295,46 +361,42 @@ class Terminal {
   }
 
   _cmdInit() {
-    this._animateSequence([
+    const steps = [
       { html: '<div class="term-text--dim">Scanning project structure...</div>', delay: 400 },
-      { html: '<div class="term-text">Found: package.json, tsconfig.json, src/</div>', delay: 600 },
+      { html: `<div class="term-text">Found: ${this._esc(this.config.initFound)}</div>`, delay: 600 },
       { html: '<div class="term-text--dim">Generating project context...</div>', delay: 500 },
       { html: '<hr class="term-hr">', delay: 200 },
       { html: `<div class="term-heading">Created CLAUDE.md</div>`, delay: 300 },
-      { html: `<div class="term-text--dim">  # Project: my-project</div>`, delay: 100 },
+      { html: `<div class="term-text--dim">  # Project: ${this._esc(this.config.projectLabel)}</div>`, delay: 100 },
       { html: `<div class="term-text--dim">  </div>`, delay: 50 },
       { html: `<div class="term-text--dim">  ## Tech Stack</div>`, delay: 100 },
-      { html: `<div class="term-text--dim">  - TypeScript + React</div>`, delay: 80 },
-      { html: `<div class="term-text--dim">  - Vite for bundling</div>`, delay: 80 },
-      { html: `<div class="term-text--dim">  - Tailwind CSS</div>`, delay: 80 },
-      { html: `<div class="term-text--dim">  </div>`, delay: 50 },
-      { html: `<div class="term-text--dim">  ## Conventions</div>`, delay: 100 },
-      { html: `<div class="term-text--dim">  - Use functional components</div>`, delay: 80 },
-      { html: `<div class="term-text--dim">  - Prefer named exports</div>`, delay: 80 },
-      { html: `<div class="term-text--dim">  - Tests in __tests__/ directories</div>`, delay: 80 },
-      { html: '<hr class="term-hr">', delay: 200 },
-      { html: '<div class="term-text--success">CLAUDE.md created successfully. Claude will use this as project context.</div>', delay: 0 },
-    ]);
+    ];
+
+    this.config.initTechStack.forEach((item) => {
+      steps.push({ html: `<div class="term-text--dim">  - ${this._esc(item)}</div>`, delay: 80 });
+    });
+
+    steps.push({ html: `<div class="term-text--dim">  </div>`, delay: 50 });
+    steps.push({ html: `<div class="term-text--dim">  ## Conventions</div>`, delay: 100 });
+
+    this.config.initConventions.forEach((item) => {
+      steps.push({ html: `<div class="term-text--dim">  - ${this._esc(item)}</div>`, delay: 80 });
+    });
+
+    steps.push({ html: '<hr class="term-hr">', delay: 200 });
+    steps.push({ html: '<div class="term-text--success">CLAUDE.md created successfully. Claude will use this as project context.</div>', delay: 0 });
+
+    this._animateSequence(steps);
   }
 
   _cmdDoctor() {
-    const checks = [
-      ['Authentication', 'authenticated as user@example.com', true, 500],
-      ['Model access', 'claude-opus-4-6 available', true, 400],
-      ['Git repository', 'clean working tree', true, 350],
-      ['Node.js', 'v22.1.0', true, 300],
-      ['MCP servers', '2 connected (filesystem, github)', true, 450],
-      ['Permissions', 'settings.json loaded', true, 300],
-      ['CLAUDE.md', 'found at project root', true, 350],
-    ];
-
     this._animateSequence([
       { html: '<div class="term-heading">Running diagnostics...</div>', delay: 400 },
-      ...checks.map(([label, detail, pass, delay]) => ({
+      ...this.config.doctorChecks.map(({ label, detail, pass, delay = 300 }) => ({
         html: `<div class="term-check">
           <span class="term-check__icon term-check__icon--${pass ? 'pass' : 'fail'}">${pass ? '\u2713' : '\u2717'}</span>
-          <span class="term-check__label">${label}</span>
-          <span class="term-check__detail">${detail}</span>
+          <span class="term-check__label">${this._esc(label)}</span>
+          <span class="term-check__detail">${this._esc(detail)}</span>
         </div>`,
         delay,
       })),
@@ -456,12 +518,12 @@ class Terminal {
     this._appendHtml(`
       <div class="term-block">
         <div class="term-heading">Claude Code Status</div>
-        <div class="term-stat"><span class="term-stat__key">Version</span><span class="term-stat__val">1.0.42</span></div>
-        <div class="term-stat"><span class="term-stat__key">Model</span><span class="term-stat__val term-stat__val--accent">claude-opus-4-6</span></div>
-        <div class="term-stat"><span class="term-stat__key">Account</span><span class="term-stat__val">user@example.com</span></div>
-        <div class="term-stat"><span class="term-stat__key">Plan</span><span class="term-stat__val">Max (5x usage)</span></div>
-        <div class="term-stat"><span class="term-stat__key">Project</span><span class="term-stat__val">my-project</span></div>
-        <div class="term-stat"><span class="term-stat__key">Working dir</span><span class="term-stat__val">~/code/my-project</span></div>
+        <div class="term-stat"><span class="term-stat__key">Version</span><span class="term-stat__val">${this._esc(this.config.version)}</span></div>
+        <div class="term-stat"><span class="term-stat__key">Model</span><span class="term-stat__val term-stat__val--accent">${this._esc(this.config.model)}</span></div>
+        <div class="term-stat"><span class="term-stat__key">Account</span><span class="term-stat__val">${this._esc(this.config.account)}</span></div>
+        <div class="term-stat"><span class="term-stat__key">Plan</span><span class="term-stat__val">${this._esc(this.config.plan)}</span></div>
+        <div class="term-stat"><span class="term-stat__key">Project</span><span class="term-stat__val">${this._esc(this.config.projectLabel)}</span></div>
+        <div class="term-stat"><span class="term-stat__key">Working dir</span><span class="term-stat__val">${this._esc(this.config.projectPath)}</span></div>
         <hr class="term-hr">
         <div class="term-stat"><span class="term-stat__key">MCP servers</span><span class="term-stat__val">2 connected</span></div>
         <div class="term-stat"><span class="term-stat__key">CLAUDE.md</span><span class="term-stat__val term-text--success">loaded</span></div>
@@ -479,24 +541,32 @@ class Terminal {
     // Navigate to settings.json in the file explorer
     setTimeout(() => {
       if (window.app && window.app.explorer) {
-        window.app.explorer.selectPath('.claude/settings.json');
+        window.app.explorer.selectPath(this.config.configPath);
       }
     }, 300);
   }
 
   _cmdMemory() {
-    this._animateSequence([
+    const steps = [
       { html: '<div class="term-heading">Auto-Memory Entries</div>', delay: 300 },
       { html: '<div class="term-text--dim">from ~/.claude/projects/.../memory/MEMORY.md</div>', delay: 200 },
       { html: '<hr class="term-hr">', delay: 150 },
-      { html: '<div class="term-text">\u2022 User prefers functional components over classes</div>', delay: 150 },
-      { html: '<div class="term-text">\u2022 Always run tests with --coverage flag</div>', delay: 120 },
-      { html: '<div class="term-text">\u2022 Project uses pnpm, not npm</div>', delay: 120 },
-      { html: '<div class="term-text">\u2022 Prefer named exports over default exports</div>', delay: 120 },
-      { html: '<div class="term-text">\u2022 Error messages should be user-friendly, not technical</div>', delay: 120 },
-      { html: '<hr class="term-hr">', delay: 150 },
-      { html: '<div class="term-text--dim">5 entries. Edit with <span class="term-text--accent">/memory --edit</span></div>', delay: 0 },
-    ]);
+    ];
+
+    this.config.memoryEntries.forEach((entry, index) => {
+      steps.push({
+        html: `<div class="term-text">\u2022 ${this._esc(entry)}</div>`,
+        delay: index === 0 ? 150 : 120,
+      });
+    });
+
+    steps.push({ html: '<hr class="term-hr">', delay: 150 });
+    steps.push({
+      html: `<div class="term-text--dim">${this.config.memoryEntries.length} entries. Edit with <span class="term-text--accent">/memory --edit</span></div>`,
+      delay: 0,
+    });
+
+    this._animateSequence(steps);
   }
 
   // ── Utilities ─────────────────────────────────────────────

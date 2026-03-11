@@ -15,7 +15,12 @@
 
 ---
 
-A simulated Claude Code project you can click through. Every file and folder in the sidebar is a real Claude Code concept — the same `.claude/` directory, config files, and scaffolding you'd find in an actual repo. Click any file to learn what it does, how to set it up, and see annotated examples you can copy into your own projects.
+A simulated Claude Code workspace you can click through. The site now includes two switchable projects:
+
+- `my-project` keeps the original Claude Code feature explorer
+- `example-projet` exposes a concrete Claude Code plugin structure with agents, skills, hooks, MCP config, and docs
+
+Every file and folder in the sidebar is a real Claude Code concept — either the base `.claude/` setup you would use in a repo, or the plugin scaffolding you can reuse in your own projects.
 
 <p align="center">
   <img src="current.png" alt="Screenshot" width="820">
@@ -65,7 +70,9 @@ explore-claude-code/
 ├── site/
 │   ├── index.html            # Single-page app entry point
 │   ├── data/
-│   │   └── manifest.json     # Drives the entire UI (tree, content, badges, features)
+│   │   ├── projects.json     # Project switcher registry
+│   │   ├── manifest.json     # Original Claude Code explorer dataset
+│   │   └── example-project.json
 │   ├── content/              # Source markdown and config files
 │   ├── js/
 │   │   ├── app.js            # Main controller, routing, keyboard nav
@@ -79,7 +86,7 @@ explore-claude-code/
 └── README.md
 ```
 
-All educational content is stored in `site/data/manifest.json` and the source files in `site/content/`. The manifest is the single source of truth for the tree structure, badges, feature groupings, and content references. To add or change content, that's where you go.
+Each workspace is driven by its own manifest in `site/data/`, and the switcher is defined in `site/data/projects.json`. The manifests remain the source of truth for tree structure, badges, feature groupings, and content references. The file content itself lives in `site/content/`.
 
 ## 🤝 Contributing
 
@@ -91,7 +98,7 @@ Contributions are welcome! Here are some areas where help would be great:
 - **Translations** into other languages
 
 If you'd like to add or update educational content, the two places to look are:
-1. `site/data/manifest.json` for tree structure and metadata
+1. `site/data/*.json` for project manifests and tree metadata
 2. `site/content/` for the actual markdown and config files
 
 Feel free to open an issue if you have ideas or spot something that could be better.

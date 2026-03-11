@@ -1,0 +1,19 @@
+{
+  "defaultProject": "my-project",
+  "projects": [
+    {
+      "id": "my-project",
+      "label": "my-project",
+      "sidebarLabel": "My-Project",
+      "sidebarMeta": "simulated workspace",
+      "manifest": "data/manifest.json"
+    },
+    {
+      "id": "example-project",
+      "label": "example-projet",
+      "sidebarLabel": "Example-Projet",
+      "sidebarMeta": "vision plugin repo",
+      "manifest": "data/example-project.json"
+    }
+  ]
+}

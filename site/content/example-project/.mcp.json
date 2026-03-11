@@ -1,0 +1,24 @@
+{
+  // Project-scope MCP config bundled with the plugin.
+  // Zeplin is the default external context source because design
+  // engineers need direct access to tokens, screens, and specs.
+
+  "mcpServers": {
+    "zeplin": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-zeplin"],
+      "env": {
+        "ZEPLIN_TOKEN": "${env:ZEPLIN_TOKEN}"
+      }
+    }
+
+    // Add Notion later if PRDs live outside the repo:
+    // "notion": {
+    //   "command": "npx",
+    //   "args": ["-y", "@anthropic/mcp-notion"],
+    //   "env": {
+    //     "NOTION_TOKEN": "${env:NOTION_TOKEN}"
+    //   }
+    // }
+  }
+}
