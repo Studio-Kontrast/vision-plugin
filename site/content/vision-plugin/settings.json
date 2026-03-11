@@ -1,0 +1,7 @@
+{
+  // Default plugin settings applied when vision-plugin is enabled.
+  // Claude Code plugin settings currently support a narrow surface,
+  // so keep this file focused on the plugin's default agent behavior.
+
+  "agent": "pr-orchestrator"
+}

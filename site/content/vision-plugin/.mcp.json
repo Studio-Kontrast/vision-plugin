@@ -1,0 +1,25 @@
+{
+  // Plugin-scoped MCP config bundled with vision-plugin.
+  // These servers start automatically when the plugin is enabled,
+  // so consumer projects get the shared external context without
+  // duplicating the configuration in each repository.
+
+  "mcpServers": {
+    "zeplin": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-zeplin"],
+      "env": {
+        "ZEPLIN_TOKEN": "${env:ZEPLIN_TOKEN}"
+      }
+    }
+
+    // Add Notion later if PRDs live outside the repo:
+    // "notion": {
+    //   "command": "npx",
+    //   "args": ["-y", "@anthropic/mcp-notion"],
+    //   "env": {
+    //     "NOTION_TOKEN": "${env:NOTION_TOKEN}"
+    //   }
+    // }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  // Permissions control which tools Claude can use without asking.
+  // Each entry is a glob pattern matched against the tool + arguments.
+  "permissions": {
+    "allow": [
+      // Let Claude read any file without prompting
+      "Read",
+      // Let Claude search files freely
+      "Glob",
+      "Grep",
+      // Let Claude run your test suite
+      "Bash(npm test)",
+      "Bash(npm run lint)",
+      // Let Claude run dev server
+      "Bash(npm run dev)",
+      // Allow git status and diff (read-only git)
+      "Bash(git status)",
+      "Bash(git diff*)",
+      "Bash(git log*)"
+    ],
+    "deny": [
+      // Never let Claude push to remote
+      "Bash(git push*)",
+      // Never let Claude install packages without asking
+      "Bash(npm install*)",
+      // Block destructive git commands
+      "Bash(git reset --hard*)",
+      "Bash(git clean*)"
+    ]
+  },
+
+  // API configuration
+  "model": "claude-sonnet-4-6",
+  "maxTokens": 16384,
+
+  // Hooks run custom scripts at specific points in Claude's workflow.
+  // See .claude/hooks/ for the full overview and example scripts.
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/my-hook.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm run lint --fix",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}

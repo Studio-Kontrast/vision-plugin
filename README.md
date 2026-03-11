@@ -15,9 +15,9 @@
 
 ---
 
-A simulated Claude Code workspace you can click through. The site now focuses on a single `example-project` repo that looks like a real Next.js codebase with an installed plugin under `.claude/plugins/vision-plugin/`.
+A simulated Claude Code setup you can click through. The site now has two complementary views: the original generic workspace `my-project`, and a reusable package called `vision-plugin`.
 
-Every file and folder in the sidebar is a real Claude Code concept in context: project memory, project settings, installed plugin files, and application source code living side by side in one simulated workspace.
+Every file and folder in the sidebar is a real Claude Code concept in context: the original Claude Code workspace concepts on one side, and a reusable plugin package on the other.
 
 <p align="center">
   <img src="current.png" alt="Screenshot" width="820">
@@ -27,13 +27,11 @@ Every file and folder in the sidebar is a real Claude Code concept in context: p
 
 | Folder / File | Feature |
 |---|---|
-| `CLAUDE.md` | Project-specific memory for the simulated workspace |
-| `.claude/settings.json` | Project-level Claude settings and local plugin usage |
-| `.claude/plugins/vision-plugin/` | What the installed plugin files look like inside a project |
-| `.claude/plugins/vision-plugin/agents/` | Installed review subagents |
-| `.claude/plugins/vision-plugin/skills/` | Installed reusable skills |
-| `.claude/plugins/vision-plugin/hooks/` | Installed hook config and scripts |
-| `src/` | Example Next.js source code showing the app architecture next to the plugin |
+| `my-project/.claude/` | The original generic Claude Code project structure from upstream |
+| `my-project/CLAUDE.md` | Project memory in the original workspace view |
+| `my-project/.mcp.json` and `src/` | Project-level MCP and normal source code in the original workspace view |
+| `vision-plugin/.claude-plugin/plugin.json` | The reusable plugin manifest |
+| `vision-plugin/agents/`, `skills/`, `hooks/`, `.mcp.json` | Shared Claude automation bundled by the plugin |
 
 Every piece of content in the explorer is written as if it were a real config file in a real repo. You're not reading *about* the config, you're reading *the config itself*, annotated so you understand every line. When you're done exploring, you can copy the scaffolding straight into your own projects.
 
@@ -65,8 +63,9 @@ explore-claude-code/
 ├── site/
 │   ├── index.html            # Single-page app entry point
 │   ├── data/
-│   │   ├── projects.json     # Single workspace registry
-│   │   └── example-project.json
+│   │   ├── projects.json     # View registry
+│   │   ├── my-project.json
+│   │   └── vision-plugin.json
 │   ├── content/              # Source markdown and config files
 │   ├── js/
 │   │   ├── app.js            # Main controller, routing, keyboard nav
@@ -80,7 +79,7 @@ explore-claude-code/
 └── README.md
 ```
 
-The workspace tree is defined in `site/data/example-project.json`, and `site/data/projects.json` points the app at that dataset. The file content itself lives in `site/content/`.
+The views are defined in `site/data/my-project.json` and `site/data/vision-plugin.json`, and `site/data/projects.json` wires the switcher between them. The file content itself lives in `site/content/`.
 
 ## 🤝 Contributing
 

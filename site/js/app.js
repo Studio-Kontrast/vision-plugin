@@ -130,9 +130,11 @@ class App {
     const sidebarLabel = this.activeProject?.sidebarLabel || this.manifest?.sidebarLabel || title;
     const sidebarMeta = this.activeProject?.sidebarMeta || this.manifest?.sidebarMeta || '';
 
+    const titleBarAppNameEl = document.getElementById('title-bar-app-name');
     const sidebarLabelEl = document.getElementById('sidebar-project-label');
     const sidebarMetaEl = document.getElementById('sidebar-project-meta');
 
+    if (titleBarAppNameEl) titleBarAppNameEl.textContent = `claude-code-explorer : ${title}`;
     if (sidebarLabelEl) sidebarLabelEl.textContent = sidebarLabel;
     if (sidebarMetaEl) sidebarMetaEl.textContent = sidebarMeta;
 
